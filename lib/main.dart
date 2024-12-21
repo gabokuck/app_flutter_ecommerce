@@ -281,6 +281,7 @@ class ItemProducto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      borderOnForeground: true,
       color: Colors.white,
       child: SizedBox(
         width: double.infinity,
@@ -291,8 +292,8 @@ class ItemProducto extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
                 ),
               ),
               child: FlutterLogo(
@@ -351,6 +352,7 @@ class ItemPromociones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      borderOnForeground: true,
       color: Colors.white,
       child: SizedBox(
         width: 150,
@@ -361,8 +363,8 @@ class ItemPromociones extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
                 ),
               ),
               child: FlutterLogo(

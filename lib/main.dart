@@ -19,70 +19,24 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme(isDarkmode: false).getTheme(),
         title: 'App Ecommerce',
         home: Scaffold(
-          bottomNavigationBar: SizedBox(
-            height: 65,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  enableFeedback: false,
-                  onPressed: () {},
-                  icon: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FlutterLogo(
-                        size: 25,
-                      ),
-                      Text('Inicio', style: TextStyle(fontSize: 10)),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  enableFeedback: false,
-                  onPressed: () {},
-                  icon: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FlutterLogo(
-                        size: 25,
-                      ),
-                      Text('Admin', style: TextStyle(fontSize: 10)),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  enableFeedback: false,
-                  onPressed: () {},
-                  icon: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FlutterLogo(
-                        size: 25,
-                      ),
-                      Text('Pedidos', style: TextStyle(fontSize: 10)),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  enableFeedback: false,
-                  onPressed: () {},
-                  icon: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FlutterLogo(
-                        size: 25,
-                      ),
-                      Text('Mi Perfil', style: TextStyle(fontSize: 10)),
-                    ],
-                  ),
-                ),
-              ],
+          bottomNavigationBar: BottomNavigationBar(items: [
+            BottomNavigationBarItem(
+              icon: FlutterLogo(),
+              label: 'Inicio',
             ),
-          ),
+            BottomNavigationBarItem(
+              icon: FlutterLogo(),
+              label: 'Admin',
+            ),
+            BottomNavigationBarItem(
+              icon: FlutterLogo(),
+              label: 'Pedidos',
+            ),
+            BottomNavigationBarItem(
+              icon: FlutterLogo(),
+              label: 'Mi Perfil',
+            ),
+          ]),
           body: NotificationListener<ScrollNotification>(
             onNotification: (ScrollNotification notification) {
               if (notification.metrics.axis == Axis.vertical) {

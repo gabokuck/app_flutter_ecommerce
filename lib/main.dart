@@ -1,3 +1,4 @@
+import 'package:app_ventas/config/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -15,8 +16,73 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Material App',
+        theme: AppTheme(isDarkmode: false).getTheme(),
+        title: 'App Ecommerce',
         home: Scaffold(
+          bottomNavigationBar: SizedBox(
+            height: 65,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  enableFeedback: false,
+                  onPressed: () {},
+                  icon: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FlutterLogo(
+                        size: 25,
+                      ),
+                      Text('Inicio', style: TextStyle(fontSize: 10)),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  enableFeedback: false,
+                  onPressed: () {},
+                  icon: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FlutterLogo(
+                        size: 25,
+                      ),
+                      Text('Admin', style: TextStyle(fontSize: 10)),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  enableFeedback: false,
+                  onPressed: () {},
+                  icon: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FlutterLogo(
+                        size: 25,
+                      ),
+                      Text('Pedidos', style: TextStyle(fontSize: 10)),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  enableFeedback: false,
+                  onPressed: () {},
+                  icon: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FlutterLogo(
+                        size: 25,
+                      ),
+                      Text('Mi Perfil', style: TextStyle(fontSize: 10)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
           body: NotificationListener<ScrollNotification>(
             onNotification: (ScrollNotification notification) {
               if (notification.metrics.axis == Axis.vertical) {
@@ -282,7 +348,6 @@ class ItemProducto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       borderOnForeground: true,
-      color: Colors.white,
       child: SizedBox(
         width: double.infinity,
         child: Column(
@@ -290,7 +355,6 @@ class ItemProducto extends StatelessWidget {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
@@ -328,7 +392,6 @@ class ItemProducto extends StatelessWidget {
                         '\$155.00',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: Colors.grey,
                           decoration: TextDecoration.lineThrough,
                           fontWeight: FontWeight.w600,
                           fontSize: 10,
@@ -353,7 +416,6 @@ class ItemPromociones extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       borderOnForeground: true,
-      color: Colors.white,
       child: SizedBox(
         width: 150,
         child: Column(
@@ -361,7 +423,6 @@ class ItemPromociones extends StatelessWidget {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
@@ -423,7 +484,6 @@ class ItemCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(

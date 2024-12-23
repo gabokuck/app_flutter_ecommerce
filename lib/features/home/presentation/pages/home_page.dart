@@ -1,4 +1,3 @@
-import 'package:app_ventas/features/bottomNavigation/presentation/widgets/custom_bottom_navigation_bar.dart';
 import 'package:app_ventas/features/home/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavigationBar(),
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
           if (notification.metrics.axis == Axis.vertical) {

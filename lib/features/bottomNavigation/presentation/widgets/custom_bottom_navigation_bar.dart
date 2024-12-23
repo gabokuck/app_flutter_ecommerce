@@ -1,4 +1,6 @@
+import 'package:app_ventas/features/bottomNavigation/presentation/blocs/pageIndex/page_index_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({
@@ -7,11 +9,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PageIndexCubit pageIndexCubit = context.watch<PageIndexCubit>();
     return BottomNavigationBar(
         onTap: (index) {
-          print(index);
+          pageIndexCubit.changePageIndexValue(index);
         },
-        currentIndex: 1,
+        currentIndex: pageIndexCubit.state.pageIndexValue,
         items: [
           BottomNavigationBarItem(
             icon: FlutterLogo(),

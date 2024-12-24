@@ -22,7 +22,7 @@ final _publicRouter = GoRouter(initialLocation: '/home', routes: [
 ]);
 
 class RouterCubit extends Cubit<GoRouter> {
-  RouterCubit() : super(_publicRouter) {}
+  RouterCubit() : super(_publicRouter);
 
   void goToHome(int pageIndex) {
     switch (pageIndex) {

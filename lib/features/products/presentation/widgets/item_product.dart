@@ -1,8 +1,11 @@
+import 'package:app_ventas/features/products/domain/entities/Product.dart';
 import 'package:flutter/material.dart';
 
 class ItemProduct extends StatelessWidget {
+  final Product product;
   const ItemProduct({
     super.key,
+    required this.product,
   });
 
   @override
@@ -21,11 +24,21 @@ class ItemProduct extends StatelessWidget {
                 height: double.infinity,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: FlutterLogo(
-                  curve: Curves.bounceIn,
-                  size: 100,
-                  style: FlutterLogoStyle.horizontal,
-                ),
+                child: product.imageUrls.isNotEmpty
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          product.imageUrls[0],
+                          height: double.infinity,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : FlutterLogo(
+                        curve: Curves.bounceIn,
+                        size: 100,
+                        style: FlutterLogoStyle.horizontal,
+                      ),
               ),
             ),
             Padding(
@@ -36,7 +49,7 @@ class ItemProduct extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Titulo del producto',
+                    product.title,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                   ),

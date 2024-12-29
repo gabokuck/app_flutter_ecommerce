@@ -15,7 +15,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
     final response = await client.get('http://10.0.2.2:3000/api/categories');
     if (response.statusCode == 200) {
       return (response.data as List)
-          .map((pokemon) => CategoryModel.fromJson(pokemon))
+          .map((category) => CategoryModel.fromJson(category))
           .toList();
     } else {
       throw Exception('Failed to load Categories list');

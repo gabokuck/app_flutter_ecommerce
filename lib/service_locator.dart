@@ -6,6 +6,11 @@ import 'package:app_ventas/features/categories/data/repositories/category_reposi
 import 'package:app_ventas/features/categories/domain/repositories/category_repository.dart';
 import 'package:app_ventas/features/categories/domain/usecases/get_list_categories.dart';
 import 'package:app_ventas/features/categories/presentation/blocs/categories/categories_bloc.dart';
+import 'package:app_ventas/features/products/data/datasources/product_remote_datasource.dart';
+import 'package:app_ventas/features/products/data/repositories/product_repository_impl.dart';
+import 'package:app_ventas/features/products/domain/repositories/product_repository.dart';
+import 'package:app_ventas/features/products/domain/usecases/get_list_products.dart';
+import 'package:app_ventas/features/products/presentation/blocs/products/products_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -22,17 +27,25 @@ void serviceLocatorInit() {
 
   // Bloc
   getIt.registerFactory(() => CategoriesBloc(getListCategories: getIt()));
+  getIt.registerFactory(() => ProductsBloc(getListProducts: getIt()));
 
   // UseCases
   getIt.registerLazySingleton(() => GetListCategories(getIt()));
+  getIt.registerLazySingleton(() => GetListProducts(getIt()));
 
   // Repositories
   getIt.registerLazySingleton<CategoryRepository>(
     () => CategoryRepositoryImpl(remoteDataSource: getIt()),
   );
+  getIt.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(remoteDataSource: getIt()),
+  );
 
   // Data Sources
   getIt.registerLazySingleton<CategoryRemoteDataSource>(
     () => CategoryRemoteDataSourceImpl(client: getIt()),
+  );
+  getIt.registerLazySingleton<ProductRemoteDataSource>(
+    () => ProductRemoteDataSourceImpl(client: getIt()),
   );
 }

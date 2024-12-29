@@ -1,5 +1,4 @@
 import 'package:app_ventas/features/categories/presentation/widgets/list_categories.dart';
-import 'package:app_ventas/features/promotions/presentation/widgets/list_promotions.dart';
 import 'package:flutter/material.dart';
 
 class SliverCategoriesAndPromotions extends StatelessWidget {
@@ -16,7 +15,8 @@ class SliverCategoriesAndPromotions extends StatelessWidget {
       // -------------------- fin secciones
 
       // -------------------- sección promociones
-      ListPromotions(),
+      //TODO: Agregar la colección de promociones en el backend
+      // ListPromotions(),
       // -------------------- fin sección promociones
     ]));
   }

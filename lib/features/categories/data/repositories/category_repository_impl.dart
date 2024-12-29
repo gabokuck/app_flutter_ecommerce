@@ -9,6 +9,6 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<List<Category>> getCategories() async {
-    return remoteDataSource.getCategories();
+    return await remoteDataSource.getCategories();
   }
 }

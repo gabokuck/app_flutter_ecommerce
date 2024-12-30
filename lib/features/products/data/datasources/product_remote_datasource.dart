@@ -1,3 +1,4 @@
+import 'package:app_ventas/config/constants/environment.dart';
 import 'package:app_ventas/features/products/data/models/product_model.dart';
 import 'package:dio/dio.dart';
 
@@ -12,7 +13,8 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getProducts() async {
-    final response = await client.get('http://10.0.2.2:3000/api/products');
+    final response =
+        await client.get('${Environment.envData.baseUrl}/products');
     if (response.statusCode == 200) {
       return (response.data as List)
           .map((product) => ProductModel.fromJson(product))

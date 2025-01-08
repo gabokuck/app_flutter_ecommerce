@@ -2,6 +2,7 @@ import 'package:app_ventas/features/admin/presentation/pages/admin_page.dart';
 import 'package:app_ventas/features/bottomNavigation/presentation/pages/scaffold_whit_bottom_navigation_bar_page.dart';
 import 'package:app_ventas/features/home/presentation/pages/home_page.dart';
 import 'package:app_ventas/features/orders/presentation/pages/orders_page.dart';
+import 'package:app_ventas/features/products/presentation/pages/product_detail_page.dart';
 import 'package:app_ventas/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +19,12 @@ final _publicRouter = GoRouter(initialLocation: '/home', routes: [
         GoRoute(path: '/admin', builder: (context, state) => AdminPage()),
         GoRoute(path: '/orders', builder: (context, state) => OrdersPage()),
         GoRoute(path: '/profile', builder: (context, state) => ProfilePage()),
+        GoRoute(
+            path: '/product-detail/:id',
+            builder: (context, state) {
+              final String id = state.pathParameters['id'] ?? '';
+              return ProductDetailPage(idProduct: id);
+            }),
       ]),
 ]);
 

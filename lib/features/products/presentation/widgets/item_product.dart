@@ -14,6 +14,29 @@ class ItemProduct extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.push('/product-detail/${product.id}');
+
+        // ** Por el momento se comenta para poseteriormente implementarlo
+        // showModalBottomSheet<void>(
+        //   context: context,
+        //   builder: (BuildContext context) {
+        //     return SizedBox(
+        //       height: 200,
+        //       child: Center(
+        //         child: Column(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           mainAxisSize: MainAxisSize.min,
+        //           children: <Widget>[
+        //             const Text('Modal BottomSheet'),
+        //             ElevatedButton(
+        //               child: const Text('Close BottomSheet'),
+        //               onPressed: () => Navigator.pop(context),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // );
       },
       child: Card(
         borderOnForeground: true,

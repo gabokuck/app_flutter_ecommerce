@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class Product extends Equatable {
+class ProductEntity extends Equatable {
   final String id;
   final String title;
   final String sku;
@@ -13,9 +13,9 @@ class Product extends Equatable {
   final List<String> categories;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final dynamic deletedAt;
+  final DateTime? deletedAt;
 
-  const Product({
+  const ProductEntity({
     required this.id,
     required this.title,
     required this.sku,

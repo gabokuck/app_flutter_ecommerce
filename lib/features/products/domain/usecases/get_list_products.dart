@@ -1,4 +1,4 @@
-import 'package:app_ventas/features/products/domain/entities/Product.dart';
+import 'package:app_ventas/features/products/domain/entities/entities.dart';
 import 'package:app_ventas/features/products/domain/repositories/product_repository.dart';
 
 class GetListProducts {
@@ -6,7 +6,7 @@ class GetListProducts {
 
   GetListProducts(this.repository);
 
-  Future<List<Product>> call() async {
+  Future<List<ProductEntity>> call() async {
     return repository.getProducts();
   }
 }

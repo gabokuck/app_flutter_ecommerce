@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
@@ -25,14 +26,17 @@ class GridViewAdminWidget extends StatelessWidget {
         ItemAdminWidget(
           text: 'Usuarios',
           icon: Icons.people_alt,
+          route: '/list-users',
         ),
         ItemAdminWidget(
           text: 'Categorias',
           icon: Icons.category_sharp,
+          route: '/list-categories',
         ),
         ItemAdminWidget(
           text: 'Productos',
           icon: Icons.propane_tank_rounded,
+          route: '/list-products',
         ),
       ],
     );
@@ -42,24 +46,35 @@ class GridViewAdminWidget extends StatelessWidget {
 class ItemAdminWidget extends StatelessWidget {
   final IconData icon;
   final String text;
+  final String route;
   const ItemAdminWidget({
     super.key,
     required this.icon,
     required this.text,
+    required this.route,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            size: 30,
-          ),
-          Text(text)
-        ],
+    return GestureDetector(
+      onTap: () {
+        context.push(route);
+      },
+      child: Card(
+        child: Column(
+          spacing: 8,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 30,
+            ),
+            Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
       ),
     );
   }

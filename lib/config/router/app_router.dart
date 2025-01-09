@@ -1,9 +1,10 @@
-import 'package:app_ventas/features/admin/presentation/pages/admin_page.dart';
+import 'package:app_ventas/features/admin/admin.dart';
 import 'package:app_ventas/features/bottomNavigation/presentation/pages/scaffold_whit_bottom_navigation_bar_page.dart';
 import 'package:app_ventas/features/home/presentation/pages/home_page.dart';
 import 'package:app_ventas/features/orders/presentation/pages/orders_page.dart';
 import 'package:app_ventas/features/products/presentation/pages/product_detail_page.dart';
 import 'package:app_ventas/features/profile/presentation/pages/profile_page.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,6 +25,21 @@ final _publicRouter = GoRouter(initialLocation: '/home', routes: [
             builder: (context, state) {
               final String id = state.pathParameters['id'] ?? '';
               return ProductDetailPage(idProduct: id);
+            }),
+        GoRoute(
+            path: '/list-users',
+            builder: (context, state) {
+              return ListUsersPage();
+            }),
+        GoRoute(
+            path: '/list-categories',
+            builder: (context, state) {
+              return ListCategoriesPage();
+            }),
+        GoRoute(
+            path: '/list-products',
+            builder: (context, state) {
+              return ListProductsPage();
             }),
       ]),
 ]);

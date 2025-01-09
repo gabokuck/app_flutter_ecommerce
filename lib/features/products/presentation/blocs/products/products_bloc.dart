@@ -1,5 +1,4 @@
-import 'package:app_ventas/features/products/domain/entities/Product.dart';
-import 'package:app_ventas/features/products/domain/usecases/get_list_products.dart';
+import 'package:app_ventas/features/products/domain/domain.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,5 @@
-import 'package:app_ventas/features/products/domain/entities/Product.dart';
+import 'package:app_ventas/features/products/domain/entities/entities.dart';
 
 abstract class ProductRepository {
-  Future<List<Product>> getProducts();
+  Future<List<ProductEntity>> getProducts();
 }

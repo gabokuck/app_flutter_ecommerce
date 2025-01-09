@@ -1,6 +1,6 @@
-import 'package:app_ventas/features/products/data/datasources/product_remote_datasource.dart';
-import 'package:app_ventas/features/products/domain/entities/Product.dart';
-import 'package:app_ventas/features/products/domain/repositories/product_repository.dart';
+import 'package:app_ventas/features/products/data/datasources/datasources.dart';
+import 'package:app_ventas/features/products/domain/entities/entities.dart';
+import 'package:app_ventas/features/products/domain/repositories/repositories.dart';
 
 class ProductRepositoryImpl extends ProductRepository {
   final ProductRemoteDataSource remoteDataSource;
@@ -10,7 +10,7 @@ class ProductRepositoryImpl extends ProductRepository {
   });
 
   @override
-  Future<List<Product>> getProducts() async {
+  Future<List<ProductEntity>> getProducts() async {
     return await remoteDataSource.getProducts();
   }
 }

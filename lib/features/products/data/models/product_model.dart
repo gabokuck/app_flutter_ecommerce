@@ -1,6 +1,6 @@
-import 'package:app_ventas/features/products/domain/entities/Product.dart';
+import 'package:app_ventas/features/products/domain/entities/entities.dart';
 
-class ProductModel extends Product {
+class ProductModel extends ProductEntity {
   const ProductModel(
       {required super.id,
       required super.title,

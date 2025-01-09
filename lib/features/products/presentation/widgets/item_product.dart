@@ -1,9 +1,9 @@
-import 'package:app_ventas/features/products/domain/entities/Product.dart';
+import 'package:app_ventas/features/products/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ItemProduct extends StatelessWidget {
-  final Product product;
+  final ProductEntity product;
   const ItemProduct({
     super.key,
     required this.product,

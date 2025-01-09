@@ -44,7 +44,7 @@ class ItemCategory extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 9,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ],

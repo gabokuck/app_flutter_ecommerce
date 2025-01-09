@@ -1,4 +1,4 @@
-import 'package:app_ventas/features/categories/domain/entities/category.dart';
+import 'package:app_ventas/features/categories/domain/entities/category_entity.dart';
 import 'package:app_ventas/features/categories/domain/usecases/get_list_categories.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

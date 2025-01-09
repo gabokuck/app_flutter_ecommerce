@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class Category extends Equatable {
+class CategoryEntity extends Equatable {
   final String id;
   final String name;
   final String description;
@@ -9,7 +9,7 @@ class Category extends Equatable {
   final DateTime updatedAt;
   final dynamic deletedAt;
 
-  const Category({
+  const CategoryEntity({
     required this.id,
     required this.name,
     required this.description,

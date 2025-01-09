@@ -8,8 +8,10 @@ class ListProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: CustomFloatingActionButtonWidget(),
         appBar: AppBar(
-          title: Text('ListProductsPage'),
+          centerTitle: true,
+          title: Text('Lista de productos'),
         ),
         body: BlocBuilder<ProductsBloc, ProductsState>(
           builder: (context, state) {

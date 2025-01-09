@@ -10,7 +10,7 @@ class ItemProductAdmin extends StatelessWidget {
       borderOnForeground: true,
       child: SizedBox(
         width: double.infinity,
-        height: 150,
+        height: 120,
         child: Row(
           children: [
             Padding(
@@ -47,7 +47,7 @@ class ItemProductAdmin extends StatelessWidget {
                   Text(
                     product.title,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                   ),
                   Text(
                     '\$${product.price}',
@@ -58,8 +58,24 @@ class ItemProductAdmin extends StatelessWidget {
                         fontSize: 13,
                         height: 1.5),
                   ),
-                  // Text(
-                  //   '\$155.00',
+                  Text(
+                    'Stock: ${product.stock}',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    'Puntos: ${product.points}',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                    ),
+                  ),
+                  //   Text(
+                  //   'Stock: ${product.stock}',
                   //   overflow: TextOverflow.ellipsis,
                   //   style: TextStyle(
                   //     decoration: TextDecoration.lineThrough,

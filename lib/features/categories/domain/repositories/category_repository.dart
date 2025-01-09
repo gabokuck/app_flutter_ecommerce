@@ -1,5 +1,5 @@
-import 'package:app_ventas/features/categories/domain/entities/category.dart';
+import 'package:app_ventas/features/categories/domain/entities/category_entity.dart';
 
 abstract class CategoryRepository {
-  Future<List<Category>> getCategories();
+  Future<List<CategoryEntity>> getCategories();
 }

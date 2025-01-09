@@ -9,6 +9,7 @@ class ProductEntity extends Equatable {
   final String detail;
   final String slug;
   final int stock;
+  final int points;
   final List<String> imageUrls;
   final List<String> categories;
   final DateTime createdAt;
@@ -24,6 +25,7 @@ class ProductEntity extends Equatable {
     required this.detail,
     required this.slug,
     required this.stock,
+    required this.points,
     required this.imageUrls,
     required this.categories,
     required this.createdAt,
@@ -41,6 +43,7 @@ class ProductEntity extends Equatable {
         detail,
         slug,
         stock,
+        points,
         imageUrls,
         categories,
         createdAt,

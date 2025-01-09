@@ -12,7 +12,7 @@ final class CategoriesInitial extends CategoriesState {}
 final class CategoriesLoading extends CategoriesState {}
 
 final class CategoriesLoaded extends CategoriesState {
-  final List<Category> categories;
+  final List<CategoryEntity> categories;
 
   const CategoriesLoaded(this.categories);
 

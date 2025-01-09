@@ -1,7 +1,5 @@
 import 'package:app_ventas/blocs_provider.dart';
-import 'package:app_ventas/config/constants/environment.dart';
-import 'package:app_ventas/config/router/app_router.dart';
-import 'package:app_ventas/config/theme/app_theme.dart';
+import 'package:app_ventas/config/config.dart';
 import 'package:app_ventas/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

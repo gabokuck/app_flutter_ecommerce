@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: AppTheme(isDarkmode: false).getTheme(),
-      title: 'App Ecommerce',
+      title: 'App Commerce',
       routerConfig: appRouter,
     );
   }

@@ -31,7 +31,7 @@ class ListCategories extends StatelessWidget {
                 shrinkWrap: true,
                 children: state.categories
                     .map((category) => ItemCategory(
-                          name: category.name,
+                          category: category,
                         ))
                     .toList(),
               ),

@@ -6,6 +6,7 @@ class CategoryModel extends CategoryEntity {
     required super.name,
     required super.description,
     required super.iconName,
+    required super.imageUrl,
     required super.createdAt,
     required super.updatedAt,
     required super.deletedAt,
@@ -17,6 +18,7 @@ class CategoryModel extends CategoryEntity {
       name: json['name'],
       description: json['description'],
       iconName: json['iconName'],
+      imageUrl: json['imageUrl'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       deletedAt:
@@ -30,6 +32,7 @@ class CategoryModel extends CategoryEntity {
       'name': super.name,
       'description': super.description,
       'iconName': super.iconName,
+      'imageUrl': super.imageUrl,
       'createdAt': super.createdAt.toIso8601String(),
       'updatedAt': super.updatedAt.toIso8601String(),
       'deletedAt': super.deletedAt?.toIso8601String(),

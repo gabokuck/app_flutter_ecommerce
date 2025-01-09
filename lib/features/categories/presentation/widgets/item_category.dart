@@ -1,10 +1,11 @@
+import 'package:app_ventas/features/categories/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 
 class ItemCategory extends StatelessWidget {
-  final String name;
+  final CategoryEntity category;
   const ItemCategory({
     super.key,
-    required this.name,
+    required this.category,
   });
 
   @override
@@ -16,14 +17,30 @@ class ItemCategory extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(
             children: [
-              FlutterLogo(
-                size: 50,
+              Expanded(
+                child: SizedBox(
+                  child: category.imageUrl.isNotEmpty
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            category.imageUrl,
+                            height: double.infinity,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : FlutterLogo(
+                          curve: Curves.bounceIn,
+                          size: 100,
+                          style: FlutterLogoStyle.horizontal,
+                        ),
+                ),
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                name.toUpperCase(),
+                category.name.toUpperCase(),
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 9,

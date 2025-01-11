@@ -4,12 +4,17 @@ import 'package:dio/dio.dart';
 
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
+  Future<void> addProduct(ProductModel product);
+  Future<void> updateProduct(ProductModel product);
+  Future<void> deleteProduct(String id);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final Dio client;
+  final String bearerToken;
 
-  ProductRemoteDataSourceImpl({required this.client});
+  ProductRemoteDataSourceImpl(
+      {required this.bearerToken, required this.client});
 
   @override
   Future<List<ProductModel>> getProducts() async {
@@ -22,5 +27,32 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     } else {
       throw Exception('Failed to load Categories list');
     }
+  }
+
+  @override
+  Future<void> addProduct(ProductModel product) async {
+    try {
+      await client.post(
+        'https://api.example.com/products',
+        data: product,
+        options: Options(
+          headers: {'Authorization': 'Bearer $bearerToken'},
+        ),
+      );
+    } catch (e) {
+      throw Exception('Error adding product: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<void> deleteProduct(String id) {
+    // TODO: implement deleteProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateProduct(ProductModel product) {
+    // TODO: implement updateProduct
+    throw UnimplementedError();
   }
 }

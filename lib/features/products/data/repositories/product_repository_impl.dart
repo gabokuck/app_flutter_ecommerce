@@ -13,4 +13,22 @@ class ProductRepositoryImpl extends ProductRepository {
   Future<List<ProductEntity>> getProducts() async {
     return await remoteDataSource.getProducts();
   }
+
+  @override
+  Future<void> addProduct(ProductEntity product) {
+    // TODO: implement addProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteProduct(int id) {
+    // TODO: implement deleteProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateProduct(ProductEntity product) {
+    // TODO: implement updateProduct
+    throw UnimplementedError();
+  }
 }

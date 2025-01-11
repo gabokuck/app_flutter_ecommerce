@@ -23,29 +23,35 @@ void serviceLocatorInit() {
 
   // ---- Products ----
   // blocs
-  getIt.registerFactory(() => ProductsBloc(getListProducts: getIt()));
+  getIt.registerFactory(
+      () => ProductsBloc(getListProducts: getIt<GetListProducts>()));
   // useCases
-  getIt.registerLazySingleton(() => GetListProducts(getIt()));
+  getIt
+      .registerLazySingleton(() => GetListProducts(getIt<ProductRepository>()));
   // Repositories
   getIt.registerLazySingleton<ProductRepository>(
-    () => ProductRepositoryImpl(remoteDataSource: getIt()),
+    () => ProductRepositoryImpl(
+        remoteDataSource: getIt<ProductRemoteDataSource>()),
   );
   // Datasources
   getIt.registerLazySingleton<ProductRemoteDataSource>(
-    () => ProductRemoteDataSourceImpl(client: getIt()),
+    () => ProductRemoteDataSourceImpl(client: getIt<Dio>(), bearerToken: ''),
   );
 
   // ---- Categories ----
   // blocs
-  getIt.registerFactory(() => CategoriesBloc(getListCategories: getIt()));
+  getIt.registerFactory(
+      () => CategoriesBloc(getListCategories: getIt<GetListCategories>()));
   // useCases
-  getIt.registerLazySingleton(() => GetListCategories(getIt()));
+  getIt.registerLazySingleton(
+      () => GetListCategories(getIt<CategoryRepository>()));
   // Repositories
   getIt.registerLazySingleton<CategoryRepository>(
-    () => CategoryRepositoryImpl(remoteDataSource: getIt()),
+    () => CategoryRepositoryImpl(
+        remoteDataSource: getIt<CategoryRemoteDataSource>()),
   );
   // Datasources
   getIt.registerLazySingleton<CategoryRemoteDataSource>(
-    () => CategoryRemoteDataSourceImpl(client: getIt()),
+    () => CategoryRemoteDataSourceImpl(client: getIt<Dio>()),
   );
 }

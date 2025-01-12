@@ -19,15 +19,22 @@ void serviceLocatorInit() {
       PageIndexCubit(pageIndexRepository: pageIndexRepository));
 
   // Register Dio instance
-  getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<Dio>(
+      () => Dio(BaseOptions(connectTimeout: Duration(seconds: 10))));
 
   // ---- Products ----
   // blocs
-  getIt.registerFactory(
-      () => ProductsBloc(getListProducts: getIt<GetListProducts>()));
+  getIt.registerFactory(() => ProductsBloc(
+        getListProducts: getIt<GetListProducts>(),
+        addProduct: getIt<AddProduct>(),
+        routerCubit: getIt<RouterCubit>(),
+      ));
+
   // useCases
-  getIt
-      .registerLazySingleton(() => GetListProducts(getIt<ProductRepository>()));
+  getIt.registerLazySingleton<GetListProducts>(
+      () => GetListProducts(getIt<ProductRepository>()));
+  getIt.registerLazySingleton<AddProduct>(
+      () => AddProduct(getIt<ProductRepository>()));
   // Repositories
   getIt.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
@@ -35,7 +42,10 @@ void serviceLocatorInit() {
   );
   // Datasources
   getIt.registerLazySingleton<ProductRemoteDataSource>(
-    () => ProductRemoteDataSourceImpl(client: getIt<Dio>(), bearerToken: ''),
+    () => ProductRemoteDataSourceImpl(
+        client: getIt<Dio>(),
+        bearerToken:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ2NmMzYzFkLWU0MmEtNDRmNS1hZTdmLTFmMDc2OTJmMzUyMyIsImlhdCI6MTczNjcxOTk2NSwiZXhwIjoxNzM2NzI3MTY1fQ.Hr2IUV34YafVKGLJQBXSWRV3MBuGbixO1V7TbCxFvKs'),
   );
 
   // ---- Categories ----

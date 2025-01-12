@@ -1,4 +1,5 @@
 import 'package:app_ventas/config/constants/environment.dart';
+import 'package:app_ventas/core/core.dart';
 import 'package:app_ventas/features/products/data/models/product_model.dart';
 import 'package:dio/dio.dart';
 
@@ -33,14 +34,16 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<void> addProduct(ProductModel product) async {
     try {
       await client.post(
-        'https://api.example.com/products',
-        data: product,
+        '${Environment.envData.baseUrl}/products',
+        data: product.toJson(),
         options: Options(
           headers: {'Authorization': 'Bearer $bearerToken'},
         ),
       );
-    } catch (e) {
-      throw Exception('Error adding product: ${e.toString()}');
+    } on DioException catch (e) {
+      handleNetworkError(e);
+      // mapToNetworkError(e);
+      // throw Exception('Failed to load Categories list');
     }
   }
 

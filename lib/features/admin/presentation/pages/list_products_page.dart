@@ -8,7 +8,32 @@ class ListProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: CustomFloatingActionButtonWidget(),
+        floatingActionButton: CustomFloatingActionButtonWidget(
+          onPressed: () {
+//             {
+//   "title": "Torta de pollo",
+//   "sku": "474908",
+//   "price": 50,
+//   "ingredients": "Milanesa",
+//   "detail": "Torta de Milanesa",
+//   "points": 1,
+//   "stock": 5,
+//   "categories": [
+//     "tortas"
+//   ]
+// }
+            context.read<ProductsBloc>().add(AddProductEvent(ProductEntity(
+                  title: 'Torta de pollo 2',
+                  sku: '474909',
+                  price: 50,
+                  ingredients: '2 pollos',
+                  detail: 'torta de pollo 2',
+                  stock: 30,
+                  points: 1,
+                  categories: ["tortas"],
+                )));
+          },
+        ),
         appBar: AppBar(
           centerTitle: true,
           title: Text('Lista de productos'),

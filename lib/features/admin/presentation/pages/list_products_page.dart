@@ -22,7 +22,7 @@ class ListProductsPage extends StatelessWidget {
 //     "tortas"
 //   ]
 // }
-            context.read<ProductsBloc>().add(AddProductEvent(ProductEntity(
+            context.read<ProductsBloc>().add(AddProductEvent(AddProductModel(
                   title: 'Torta de pollo 2',
                   sku: '474909',
                   price: 50,

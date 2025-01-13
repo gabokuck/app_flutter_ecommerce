@@ -10,7 +10,7 @@ sealed class ProductsEvent extends Equatable {
 class LoadProductsEvent extends ProductsEvent {}
 
 class AddProductEvent extends ProductsEvent {
-  final ProductEntity product;
+  final AddProductModel product;
   const AddProductEvent(this.product);
   @override
   List<Object?> get props => [product];

@@ -1,11 +1,12 @@
 import 'package:app_ventas/config/constants/environment.dart';
 import 'package:app_ventas/core/core.dart';
-import 'package:app_ventas/features/products/data/models/product_model.dart';
+import 'package:app_ventas/features/products/data/models/models.dart';
+
 import 'package:dio/dio.dart';
 
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
-  Future<void> addProduct(ProductModel product);
+  Future<void> addProduct(AddProductModel product);
   Future<void> updateProduct(ProductModel product);
   Future<void> deleteProduct(String id);
 }
@@ -31,7 +32,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   }
 
   @override
-  Future<void> addProduct(ProductModel product) async {
+  Future<void> addProduct(AddProductModel product) async {
     try {
       await client.post(
         '${Environment.envData.baseUrl}/products',

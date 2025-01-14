@@ -9,12 +9,15 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
+  final GetLocalBearerToken getLocalBearerToken;
 
-  AuthBloc(this.loginUseCase) : super(AuthInitial()) {
-    on<LoginEvent>(loginEvent);
+  AuthBloc(this.loginUseCase, this.getLocalBearerToken) : super(AuthInitial()) {
+    on<LoginEvent>(_loginEvent);
+    on<CheckAuthStatusEvent>(_checkAuthStatus);
+    checkAuthStatus();
   }
 
-  Future<void> loginEvent(LoginEvent event, Emitter<AuthState> emit) async {
+  Future<void> _loginEvent(LoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
       final result = await loginUseCase(event.email, event.password);
@@ -25,6 +28,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (e is AppNetworkException) {
         emit(AuthError(e.message));
       }
+    }
+  }
+
+  Future<void> _checkAuthStatus(
+      CheckAuthStatusEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+
+    final bearerToken = await getLocalBearerToken();
+    if (bearerToken != null) {
+      emit(AuthAuthenticated());
+    } else {
+      emit(AuthInitial());
+    }
+  }
+
+  Future<void> checkAuthStatus() async {
+    final bearerToken = await getLocalBearerToken();
+    if (bearerToken != null) {
+      add(CheckAuthStatusEvent(AuthAuthenticated()));
+    } else {
+      add(CheckAuthStatusEvent(AuthInitial()));
     }
   }
 }

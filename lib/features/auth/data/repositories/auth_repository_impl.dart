@@ -16,4 +16,10 @@ class AuthRepositoryImpl implements AuthRepository {
     await localDataSource.cacheToken(response['token']);
     return true;
   }
+
+  @override
+  Future<String?> getLocalBearerToken() async {
+    final token = await localDataSource.getToken();
+    return token;
+  }
 }

@@ -17,11 +17,11 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       required this.getListProducts,
       required this.routerCubit})
       : super(ProductsInitial()) {
-    on<LoadProductsEvent>(loadListProductsEvent);
-    on<AddProductEvent>(addProductEvent);
+    on<LoadProductsEvent>(_loadListProductsEvent);
+    on<AddProductEvent>(_addProductEvent);
   }
 
-  Future<void> loadListProductsEvent(
+  Future<void> _loadListProductsEvent(
       LoadProductsEvent event, Emitter<ProductsState> emit) async {
     emit(ProductsLoading());
     try {
@@ -32,7 +32,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     }
   }
 
-  Future<void> addProductEvent(
+  Future<void> _addProductEvent(
       AddProductEvent event, Emitter<ProductsState> emit) async {
     emit(ProductsLoading());
     try {

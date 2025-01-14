@@ -1,5 +1,4 @@
 import 'package:app_ventas/config/router/router.dart';
-import 'package:app_ventas/core/network/network.dart';
 import 'package:app_ventas/features/auth/auth.dart';
 import 'package:app_ventas/main.dart';
 
@@ -18,10 +17,11 @@ Future<void> serviceLocatorInit() async {
 
 // ---- Auth ----
   // BloC
-  getIt.registerFactory(() => AuthBloc(getIt()));
+  getIt.registerFactory(() => AuthBloc(getIt(), getIt()));
 
   // Use cases
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetLocalBearerToken(getIt()));
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(

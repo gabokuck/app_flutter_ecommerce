@@ -14,3 +14,12 @@ class LoginEvent extends AuthEvent {
   @override
   List<Object?> get props => [email, password];
 }
+
+class CheckAuthStatusEvent extends AuthEvent {
+  final AuthState state;
+
+  CheckAuthStatusEvent(this.state);
+
+  @override
+  List<Object?> get props => [state];
+}

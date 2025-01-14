@@ -1,9 +1,11 @@
 import 'package:app_ventas/config/constants/environment.dart';
 import 'package:app_ventas/core/utils/utils.dart';
+import 'package:app_ventas/features/auth/data/models/models.dart';
 import 'package:dio/dio.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> login(String email, String password);
+  Future<CheckAuthStatusResponseModel?> checkAuthStatus(String bearerToken);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -22,6 +24,24 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return response.data;
     } catch (e) {
       return handleNetworkError(e);
+    }
+  }
+
+  @override
+  Future<CheckAuthStatusResponseModel?> checkAuthStatus(
+      String bearerToken) async {
+    try {
+      final response = await apiClient.get(
+        '${Environment.envData.baseUrl}/auth/check-auth-status',
+        options: Options(
+          headers: {'Authorization': 'Bearer $bearerToken'},
+        ),
+      );
+
+      return CheckAuthStatusResponseModel.fromJson(response.data);
+    } catch (e) {
+      handleNetworkError(e);
+      return null;
     }
   }
 }

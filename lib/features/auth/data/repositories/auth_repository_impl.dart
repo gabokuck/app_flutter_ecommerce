@@ -1,4 +1,5 @@
 import 'package:app_ventas/features/auth/data/datasources/datasources.dart';
+import 'package:app_ventas/features/auth/domain/entities/check_auth_status_response_entity.dart';
 import 'package:app_ventas/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -21,5 +22,11 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<String?> getLocalBearerToken() async {
     final token = await localDataSource.getToken();
     return token;
+  }
+
+  @override
+  Future<CheckAuthStatusResponseEntity?> checkAuthStatus(
+      String bearerToken) async {
+    return remoteDataSource.checkAuthStatus(bearerToken);
   }
 }

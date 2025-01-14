@@ -17,11 +17,12 @@ Future<void> serviceLocatorInit() async {
 
 // ---- Auth ----
   // BloC
-  getIt.registerFactory(() => AuthBloc(getIt(), getIt()));
+  getIt.registerFactory(() => AuthBloc(getIt(), getIt(), getIt()));
 
   // Use cases
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));
   getIt.registerLazySingleton(() => GetLocalBearerToken(getIt()));
+  getIt.registerLazySingleton(() => GetUserData(getIt()));
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(

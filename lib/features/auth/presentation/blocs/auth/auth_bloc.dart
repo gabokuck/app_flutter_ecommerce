@@ -10,8 +10,10 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final GetLocalBearerToken getLocalBearerToken;
+  final GetUserData getUserData;
 
-  AuthBloc(this.loginUseCase, this.getLocalBearerToken) : super(AuthInitial()) {
+  AuthBloc(this.loginUseCase, this.getLocalBearerToken, this.getUserData)
+      : super(AuthInitial()) {
     on<LoginEvent>(_loginEvent);
     on<CheckAuthStatusEvent>(_checkAuthStatus);
     checkAuthStatus();
@@ -44,8 +46,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> checkAuthStatus() async {
-    final bearerToken = await getLocalBearerToken();
-    if (bearerToken != null) {
+    final bearerToken = await getLocalBearerToken() ?? '';
+    final userData = await getUserData(bearerToken);
+
+    if (userData != null) {
       add(CheckAuthStatusEvent(AuthAuthenticated()));
     } else {
       add(CheckAuthStatusEvent(AuthInitial()));

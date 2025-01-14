@@ -1,0 +1,19 @@
+import 'package:app_ventas/features/auth/data/datasources/datasources.dart';
+import 'package:app_ventas/features/auth/domain/repositories/auth_repository.dart';
+
+class AuthRepositoryImpl implements AuthRepository {
+  final AuthRemoteDataSource remoteDataSource;
+  final AuthLocalDataSource localDataSource;
+
+  AuthRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
+
+  @override
+  Future<bool> login(String email, String password) async {
+    final response = await remoteDataSource.login(email, password);
+    await localDataSource.cacheToken(response['token']);
+    return true;
+  }
+}

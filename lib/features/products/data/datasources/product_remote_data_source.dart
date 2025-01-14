@@ -43,8 +43,6 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       );
     } on DioException catch (e) {
       handleNetworkError(e);
-      // mapToNetworkError(e);
-      // throw Exception('Failed to load Categories list');
     }
   }
 

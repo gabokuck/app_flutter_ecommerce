@@ -1,4 +1,7 @@
 import 'package:app_ventas/config/router/router.dart';
+import 'package:app_ventas/core/network/network.dart';
+import 'package:app_ventas/features/auth/auth.dart';
+import 'package:app_ventas/main.dart';
 
 import 'features/bottomNavigation/bottom_navigation.dart';
 import 'package:app_ventas/features/categories/categories.dart';
@@ -9,9 +12,32 @@ import 'package:get_it/get_it.dart';
 
 GetIt getIt = GetIt.instance;
 
-void serviceLocatorInit() {
+Future<void> serviceLocatorInit() async {
   // ---- Router ----
   getIt.registerSingleton<RouterCubit>(RouterCubit());
+
+// ---- Auth ----
+  // BloC
+  getIt.registerFactory(() => AuthBloc(getIt()));
+
+  // Use cases
+  getIt.registerLazySingleton(() => LoginUseCase(getIt()));
+
+  // Repository
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: getIt(),
+      localDataSource: getIt(),
+    ),
+  );
+
+  // Data sources
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(getIt()),
+  );
+  getIt.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(sharedPreferences: sharedPref),
+  );
 
   // ---- Bottom navigation ----
   final PageIndexRepositoryImpl pageIndexRepository = PageIndexRepositoryImpl();

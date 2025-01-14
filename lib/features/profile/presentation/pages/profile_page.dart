@@ -1,16 +1,32 @@
+import 'package:app_ventas/features/auth/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(actions: listActionsProfile),
-        body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          children: [UserWidget(), PointsUserWidget()],
-        ));
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return Scaffold(
+            appBar: AppBar(actions: listActionsProfile),
+            body: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                if (state is AuthAuthenticated) UserWidget(),
+                if (state is AuthAuthenticated) PointsUserWidget(),
+                if (state is! AuthAuthenticated)
+                  ElevatedButton(
+                      onPressed: () {
+                        context.push('/login');
+                      },
+                      child: Text('Iniciar sesión'))
+              ],
+            ));
+      },
+    );
   }
 }
 

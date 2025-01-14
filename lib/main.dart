@@ -3,10 +3,14 @@ import 'package:app_ventas/config/config.dart';
 import 'package:app_ventas/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+late SharedPreferences sharedPref;
 
 void main() async {
   await Environment.initEnvironment();
   WidgetsFlutterBinding.ensureInitialized();
+  sharedPref = await SharedPreferences.getInstance();
   serviceLocatorInit();
   runApp(const BlocsProvider(child: MyApp()));
 }

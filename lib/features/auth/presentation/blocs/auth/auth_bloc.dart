@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       this.updateBearerTokenServiceLocator)
       : super(AuthInitial()) {
     on<LoginEvent>(_loginEvent);
-    on<CheckAuthStatusEvent>(_checkAuthStatus);
+    on<SetAuthStatusEvent>(_setAuthStatus);
     checkAuthStatus();
   }
 
@@ -36,28 +36,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _checkAuthStatus(
-      CheckAuthStatusEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+  Future<void> _handleAuthStatus(
+    Function(AuthState) emitOrAdd, {
+    bool shouldUpdateServiceLocator = false,
+  }) async {
     final bearerToken = await getLocalBearerToken() ?? '';
+    if (shouldUpdateServiceLocator) {
+      updateBearerTokenServiceLocator(bearerToken);
+    }
     final userData = await getUserData(bearerToken);
+
     if (userData != null) {
-      emit(AuthAuthenticated(
+      emitOrAdd(AuthAuthenticated(
           user: userData.user as UserModel, token: bearerToken));
     } else {
-      emit(AuthInitial());
+      emitOrAdd(AuthInitial());
     }
   }
 
-  Future<void> checkAuthStatus() async {
-    final bearerToken = await getLocalBearerToken() ?? '';
-    updateBearerTokenServiceLocator(bearerToken);
-    final userData = await getUserData(bearerToken);
+  Future<void> _setAuthStatus(
+      SetAuthStatusEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    await _handleAuthStatus(emit.call);
+  }
 
-    if (userData != null) {
-      add(CheckAuthStatusEvent(AuthAuthenticated()));
-    } else {
-      add(CheckAuthStatusEvent(AuthInitial()));
-    }
+  Future<void> checkAuthStatus() async {
+    await _handleAuthStatus((state) => add(SetAuthStatusEvent(state)),
+        shouldUpdateServiceLocator: true);
   }
 }

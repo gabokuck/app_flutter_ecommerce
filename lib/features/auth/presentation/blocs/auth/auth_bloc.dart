@@ -27,6 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final result = await loginUseCase(event.email, event.password);
       if (result) {
+        await checkAuthStatus();
         emit(AuthAuthenticated());
       }
     } catch (e) {
@@ -36,32 +37,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _handleAuthStatus(
-    Function(AuthState) emitOrAdd, {
-    bool shouldUpdateServiceLocator = false,
-  }) async {
-    final bearerToken = await getLocalBearerToken() ?? '';
-    if (shouldUpdateServiceLocator) {
-      updateBearerTokenServiceLocator(bearerToken);
-    }
-    final userData = await getUserData(bearerToken);
-
-    if (userData != null) {
-      emitOrAdd(AuthAuthenticated(
-          user: userData.user as UserModel, token: bearerToken));
-    } else {
-      emitOrAdd(AuthInitial());
-    }
-  }
-
-  Future<void> _setAuthStatus(
-      SetAuthStatusEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-    await _handleAuthStatus(emit.call);
-  }
-
   Future<void> checkAuthStatus() async {
-    await _handleAuthStatus((state) => add(SetAuthStatusEvent(state)),
-        shouldUpdateServiceLocator: true);
+    final bearerToken = await getLocalBearerToken() ?? '';
+    if (bearerToken.isNotEmpty) {
+      updateBearerTokenServiceLocator(bearerToken);
+      final userData = await getUserData();
+      if (userData != null) {
+        add(SetAuthStatusEvent(AuthAuthenticated(
+            token: bearerToken, user: userData.user as UserModel)));
+      } else {
+        add(SetAuthStatusEvent(AuthInitial()));
+      }
+    }
   }
+
+  void _setAuthStatus(SetAuthStatusEvent event, Emitter<AuthState> emit) {
+    emit(event.state);
+  }
+
+  // Future<void> checkAuthStatus() async {
+  //   final bearerToken = await getLocalBearerToken() ?? '';
+  //   if (shouldUpdateServiceLocator) {
+  //     updateBearerTokenServiceLocator(bearerToken);
+  //   }
+  //   final userData = await getUserData(bearerToken);
+
+  //   if (userData != null) {
+  //     emitOrAdd(AuthAuthenticated(
+  //         user: userData.user as UserModel, token: bearerToken));
+  //   } else {
+  //     emitOrAdd(AuthInitial());
+  //   }
+  // }
 }

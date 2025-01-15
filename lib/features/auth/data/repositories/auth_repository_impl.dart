@@ -25,8 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<CheckAuthStatusResponseEntity?> checkAuthStatus(
-      String bearerToken) async {
-    return remoteDataSource.checkAuthStatus(bearerToken);
+  Future<CheckAuthStatusResponseEntity?> checkAuthStatus() async {
+    return remoteDataSource.checkAuthStatus();
   }
 }

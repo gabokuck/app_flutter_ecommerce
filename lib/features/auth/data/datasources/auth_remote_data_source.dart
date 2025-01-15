@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> login(String email, String password);
-  Future<CheckAuthStatusResponseModel?> checkAuthStatus(String bearerToken);
+  Future<CheckAuthStatusResponseModel?> checkAuthStatus();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -28,14 +28,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<CheckAuthStatusResponseModel?> checkAuthStatus(
-      String bearerToken) async {
+  Future<CheckAuthStatusResponseModel?> checkAuthStatus() async {
     try {
       final response = await apiClient.get(
         '${Environment.envData.baseUrl}/auth/check-auth-status',
-        options: Options(
-          headers: {'Authorization': 'Bearer $bearerToken'},
-        ),
       );
 
       return CheckAuthStatusResponseModel.fromJson(response.data);

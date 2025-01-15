@@ -17,15 +17,50 @@ class ProfilePage extends StatelessWidget {
               children: [
                 if (state is AuthAuthenticated) UserWidget(),
                 if (state is AuthAuthenticated) PointsUserWidget(),
-                if (state is! AuthAuthenticated)
-                  ElevatedButton(
-                      onPressed: () {
-                        context.push('/login');
-                      },
-                      child: Text('Iniciar sesión'))
+                if (state is! AuthAuthenticated) NotAuthWidget()
               ],
             ));
       },
+    );
+  }
+}
+
+class NotAuthWidget extends StatelessWidget {
+  const NotAuthWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      width: double.infinity,
+      height: size.height * 0.8,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.person_sharp,
+              color: Colors.grey,
+              size: 100,
+            ),
+            Text(
+              'Por favor inicia sesión o crea una cuenta',
+              style: TextStyle(color: Colors.grey),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  context.push('/login');
+                },
+                child: Text('Iniciar sesión')),
+            TextButton(onPressed: () {}, child: Text('Crear cuenta'))
+          ],
+        ),
+      ),
     );
   }
 }

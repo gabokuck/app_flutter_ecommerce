@@ -6,7 +6,7 @@ class GetUserData {
 
   GetUserData(this.repository);
 
-  Future<CheckAuthStatusResponseEntity?> call(String bearerToken) {
-    return repository.checkAuthStatus(bearerToken);
+  Future<CheckAuthStatusResponseEntity?> call() {
+    return repository.checkAuthStatus();
   }
 }

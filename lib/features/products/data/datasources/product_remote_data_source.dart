@@ -1,4 +1,3 @@
-import 'package:app_ventas/config/constants/environment.dart';
 import 'package:app_ventas/core/core.dart';
 import 'package:app_ventas/features/products/data/models/models.dart';
 
@@ -16,12 +15,13 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final String bearerToken;
 
   ProductRemoteDataSourceImpl(
-      {required this.bearerToken, required this.client});
+      {required this.bearerToken, required this.client}) {
+    print(bearerToken);
+  }
 
   @override
   Future<List<ProductModel>> getProducts() async {
-    final response =
-        await client.get('${Environment.envData.baseUrl}/products');
+    final response = await client.get('/products');
     if (response.statusCode == 200) {
       return (response.data as List)
           .map((product) => ProductModel.fromJson(product))
@@ -35,11 +35,8 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<void> addProduct(AddProductModel product) async {
     try {
       await client.post(
-        '${Environment.envData.baseUrl}/products',
+        '/products',
         data: product.toJson(),
-        options: Options(
-          headers: {'Authorization': 'Bearer $bearerToken'},
-        ),
       );
     } on DioException catch (e) {
       handleNetworkError(e);

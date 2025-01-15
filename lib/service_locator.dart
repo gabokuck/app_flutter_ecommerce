@@ -1,3 +1,4 @@
+import 'package:app_ventas/config/config.dart';
 import 'package:app_ventas/config/router/router.dart';
 import 'package:app_ventas/features/auth/auth.dart';
 import 'package:app_ventas/main.dart';
@@ -12,10 +13,33 @@ import 'package:get_it/get_it.dart';
 GetIt getIt = GetIt.instance;
 
 Future<void> serviceLocatorInit() async {
-  // ---- Router ----
+  // ** Registra el token con un nombre específico **
+  getIt.registerLazySingleton<String>(
+    () => '',
+    instanceName: 'BearerToken',
+  );
+
+  // ** Register Dio instance **
+  getIt.registerLazySingleton<Dio>(
+    () {
+      final dio = Dio();
+      dio.options.baseUrl = Environment.envData.baseUrl;
+      dio.interceptors.add(InterceptorsWrapper(
+        onRequest: (options, handler) {
+          // Obtiene el token por nombre
+          final token = getIt<String>(instanceName: 'BearerToken');
+          options.headers['Authorization'] = 'Bearer $token';
+          return handler.next(options);
+        },
+      ));
+      return dio;
+    },
+  );
+
+  // ** Router **
   getIt.registerSingleton<RouterCubit>(RouterCubit());
 
-// ---- Auth ----
+  // ** Auth **
   // BloC
   getIt.registerFactory(() => AuthBloc(getIt(), getIt(), getIt()));
 
@@ -40,16 +64,14 @@ Future<void> serviceLocatorInit() async {
     () => AuthLocalDataSourceImpl(sharedPreferences: sharedPref),
   );
 
-  // ---- Bottom navigation ----
-  final PageIndexRepositoryImpl pageIndexRepository = PageIndexRepositoryImpl();
-  getIt.registerSingleton<PageIndexCubit>(
-      PageIndexCubit(pageIndexRepository: pageIndexRepository));
+  // ** Bottom navigation **
+  getIt.registerLazySingleton(() => PageIndexRepositoryImpl());
 
-  // Register Dio instance
-  getIt.registerLazySingleton<Dio>(
-      () => Dio(BaseOptions(connectTimeout: Duration(seconds: 10))));
+  getIt.registerSingleton<PageIndexCubit>(PageIndexCubit(
+      pageIndexRepository: getIt<PageIndexRepositoryImpl>(),
+      routerCubit: getIt<RouterCubit>()));
 
-  // ---- Products ----
+  // ** Products **
   // blocs
   getIt.registerFactory(() => ProductsBloc(
         getListProducts: getIt<GetListProducts>(),
@@ -69,13 +91,10 @@ Future<void> serviceLocatorInit() async {
   );
   // Datasources
   getIt.registerLazySingleton<ProductRemoteDataSource>(
-    () => ProductRemoteDataSourceImpl(
-        client: getIt<Dio>(),
-        bearerToken:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ2NmMzYzFkLWU0MmEtNDRmNS1hZTdmLTFmMDc2OTJmMzUyMyIsImlhdCI6MTczNjcxOTk2NSwiZXhwIjoxNzM2NzI3MTY1fQ.Hr2IUV34YafVKGLJQBXSWRV3MBuGbixO1V7TbCxFvKs'),
+    () => ProductRemoteDataSourceImpl(client: getIt<Dio>(), bearerToken: ''),
   );
 
-  // ---- Categories ----
+  // ** Categories **
   // blocs
   getIt.registerFactory(
       () => CategoriesBloc(getListCategories: getIt<GetListCategories>()));

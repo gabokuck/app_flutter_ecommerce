@@ -1,4 +1,3 @@
-import 'package:app_ventas/config/constants/environment.dart';
 import 'package:app_ventas/features/categories/data/models/category_model.dart';
 import 'package:dio/dio.dart';
 
@@ -13,8 +12,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<List<CategoryModel>> getCategories() async {
-    final response =
-        await client.get('${Environment.envData.baseUrl}/categories');
+    final response = await client.get('/categories');
     if (response.statusCode == 200) {
       return (response.data as List)
           .map((category) => CategoryModel.fromJson(category))

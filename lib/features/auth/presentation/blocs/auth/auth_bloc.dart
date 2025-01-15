@@ -1,8 +1,10 @@
 import 'package:app_ventas/core/core.dart';
+import 'package:app_ventas/features/auth/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:app_ventas/features/auth/domain/usecases/usecases.dart';
+import 'package:get_it/get_it.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -36,10 +38,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _checkAuthStatus(
       CheckAuthStatusEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-
-    final bearerToken = await getLocalBearerToken();
-    if (bearerToken != null) {
-      emit(AuthAuthenticated());
+    final bearerToken = await getLocalBearerToken() ?? '';
+    final userData = await getUserData(bearerToken);
+    if (userData != null) {
+      emit(AuthAuthenticated(
+          user: userData.user as UserModel, token: bearerToken));
     } else {
       emit(AuthInitial());
     }
@@ -47,6 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> checkAuthStatus() async {
     final bearerToken = await getLocalBearerToken() ?? '';
+    updateToken(bearerToken);
     final userData = await getUserData(bearerToken);
 
     if (userData != null) {
@@ -54,5 +58,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       add(CheckAuthStatusEvent(AuthInitial()));
     }
+  }
+}
+
+void updateToken(String newToken) {
+  final sl = GetIt.instance;
+
+  if (sl.isRegistered<String>(instanceName: 'BearerToken')) {
+    // Reemplaza el token existente con el nuevo valor
+    sl.unregister<String>(instanceName: 'BearerToken');
+    sl.registerLazySingleton<String>(() => newToken,
+        instanceName: 'BearerToken');
+  } else {
+    // Registra el token si aún no existe
+    sl.registerLazySingleton<String>(
+      () => newToken,
+      instanceName: 'BearerToken',
+    );
   }
 }

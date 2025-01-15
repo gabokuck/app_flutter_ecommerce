@@ -1,11 +1,22 @@
+import 'package:app_ventas/config/config.dart';
 import 'package:dio/dio.dart';
 
 class ApiClient {
-  final Dio dio;
+  String baseUrl = Environment.envData.baseUrl;
+  late Dio _dio;
 
-  ApiClient(this.dio);
-
-  Future<Response> post(String path, {Map<String, dynamic>? data}) async {
-    return await dio.post(path, data: data);
+  ApiClient() {
+    _dio = _createDio();
   }
+
+  Dio _createDio() => Dio(
+        BaseOptions(
+          baseUrl: baseUrl,
+          receiveTimeout: const Duration(minutes: 1),
+          connectTimeout: const Duration(minutes: 1),
+          validateStatus: (int? status) {
+            return status! > 0;
+          },
+        ),
+      );
 }

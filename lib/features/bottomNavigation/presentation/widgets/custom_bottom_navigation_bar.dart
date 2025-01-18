@@ -18,19 +18,19 @@ class CustomBottomNavigationBar extends StatelessWidget {
             currentIndex: state.pageIndexValue,
             items: [
               BottomNavigationBarItem(
-                icon: FlutterLogo(),
+                icon: Icon(Icons.home),
                 label: 'Inicio',
               ),
               BottomNavigationBarItem(
-                icon: FlutterLogo(),
+                icon: Icon(Icons.admin_panel_settings_rounded),
                 label: 'Admin',
               ),
               BottomNavigationBarItem(
-                icon: FlutterLogo(),
+                icon: Icon(Icons.all_inbox_rounded),
                 label: 'Pedidos',
               ),
               BottomNavigationBarItem(
-                icon: FlutterLogo(),
+                icon: Icon(Icons.person),
                 label: 'Mi Perfil',
               ),
             ]);

@@ -17,10 +17,45 @@ class ProfilePage extends StatelessWidget {
               children: [
                 if (state is AuthAuthenticated) UserWidget(),
                 if (state is AuthAuthenticated) PointsUserWidget(),
-                if (state is! AuthAuthenticated) NotAuthWidget()
+                if (state is AuthAuthenticated) LogOutButtonWidget(),
+                if (state is! AuthAuthenticated) NotAuthWidget(),
               ],
             ));
       },
+    );
+  }
+}
+
+class LogOutButtonWidget extends StatelessWidget {
+  const LogOutButtonWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        context.read<AuthBloc>().logOut();
+      },
+      child: Padding(
+        padding: EdgeInsets.only(top: 10),
+        child: SizedBox(
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text('Cerrar sesión'),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(Icons.logout),
+              SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

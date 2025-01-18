@@ -28,4 +28,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<CheckAuthStatusResponseEntity?> checkAuthStatus() async {
     return remoteDataSource.checkAuthStatus();
   }
+
+  @override
+  Future<bool> logout() {
+    return localDataSource.logout();
+  }
 }

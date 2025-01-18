@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'app-venta-d8e99.firebasestorage.app',
     iosBundleId: 'com.example.appVentas',
   );
+
 }

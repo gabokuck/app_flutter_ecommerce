@@ -1,4 +1,5 @@
 import 'package:app_ventas/features/products/domain/entities/entities.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,8 +13,19 @@ class ItemProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         context.push('/product-detail/${product.id}');
+
+        // TODO: Ejempplo de como implementar analytics
+        await FirebaseAnalytics.instance.logSelectItem(
+          itemListName: product.title,
+          itemListId: product.id,
+          parameters: {
+            'price': '${product.price}',
+            'sku': '${product.sku}',
+            'categories': '${product.categories}',
+          },
+        );
 
         // ** Por el momento se comenta para poseteriormente implementarlo
         // showModalBottomSheet<void>(

@@ -9,9 +9,16 @@ import 'package:app_ventas/features/profile/presentation/pages/profile_page.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+// TODO: para implementar analytics
+// FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+// FirebaseAnalyticsObserver observer =
+//     FirebaseAnalyticsObserver(analytics: analytics);
+
 final _publicRouter = GoRouter(initialLocation: '/home', routes: [
   ShellRoute(
+      // observers: [observer], // TODO: observador para escuchar el cambio en las rutas
       builder: (context, state, child) {
+        // FirebaseAnalytics.instance.logScreenView(screenName: '${state.uri}');
         return ScaffoldWithBottomNavBar(
           child: child,
         );

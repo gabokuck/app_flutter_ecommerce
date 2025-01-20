@@ -1,9 +1,9 @@
 import 'package:app_ventas/features/auth/domain/repositories/repositories.dart';
 
-class LogoutUsecase {
+class LogoutUseCase {
   final AuthRepository repository;
 
-  LogoutUsecase(this.repository);
+  LogoutUseCase(this.repository);
 
   Future<bool> call() {
     return repository.logout();

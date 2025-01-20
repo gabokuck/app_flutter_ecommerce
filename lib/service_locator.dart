@@ -45,7 +45,7 @@ Future<void> serviceLocatorInit() async {
 
   // Use cases
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));
-  getIt.registerLazySingleton(() => LogoutUsecase(getIt()));
+  getIt.registerLazySingleton(() => LogoutUseCase(getIt()));
   getIt.registerLazySingleton(() => GetLocalBearerToken(getIt()));
   getIt.registerLazySingleton(() => GetUserData(getIt()));
   getIt.registerLazySingleton(() => UpdateBearerTokenServiceLocator());

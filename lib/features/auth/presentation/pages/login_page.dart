@@ -15,15 +15,15 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(title: Text('Login')),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthAuthenticated) {
+          if (state.status  == AuthStatus.authenticated) {
             context.read<PageIndexCubit>().changePageIndexValue(0);
-          } else if (state is AuthError) {
+          } else if (state.status  == AuthStatus.error) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
+                .showSnackBar(SnackBar(content: Text(state.errorMessage ?? '')));
           }
         },
         builder: (context, state) {
-          if (state is AuthLoading) {
+          if (state.status  == AuthStatus.loading) {
             return Center(child: CircularProgressIndicator());
           }
 

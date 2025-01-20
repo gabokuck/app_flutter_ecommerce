@@ -1,6 +1,5 @@
 import 'package:app_ventas/core/core.dart';
 import 'package:app_ventas/features/auth/data/models/models.dart';
-import 'package:app_ventas/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,30 +10,30 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
-  final LogoutUsecase logoutUsecase;
+  final LogoutUseCase logoutUseCase;
   final GetLocalBearerToken getLocalBearerToken;
   final GetUserData getUserData;
   final UpdateBearerTokenServiceLocator updateBearerTokenServiceLocator;
 
   AuthBloc(this.loginUseCase, this.getLocalBearerToken, this.getUserData,
-      this.updateBearerTokenServiceLocator, this.logoutUsecase)
-      : super(AuthInitial()) {
+      this.updateBearerTokenServiceLocator, this.logoutUseCase)
+      : super(AuthState()) {
     on<LoginEvent>(_loginEvent);
     on<SetAuthStatusEvent>(_setAuthStatus);
     checkAuthStatus();
   }
 
   Future<void> _loginEvent(LoginEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(state.copyWith(status: AuthStatus.loading));
     try {
       final result = await loginUseCase(event.email, event.password);
       if (result) {
         await checkAuthStatus();
-        emit(AuthAuthenticated());
+        emit(state.copyWith(status: AuthStatus.authenticated));
       }
     } catch (e) {
       if (e is AppNetworkException) {
-        emit(AuthError(e.message));
+        emit(state.copyWith(status: AuthStatus.error, errorMessage: e.message));
       }
     }
   }
@@ -49,19 +48,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       updateBearerTokenServiceLocator(bearerToken);
       final userData = await getUserData();
       if (userData != null) {
-        add(SetAuthStatusEvent(AuthAuthenticated(
-            token: bearerToken, user: userData.user as UserModel)));
+        add(SetAuthStatusEvent(state.copyWith(
+            status: AuthStatus.authenticated, user: userData.user as UserModel)));
       } else {
-        add(SetAuthStatusEvent(AuthInitial()));
+        add(SetAuthStatusEvent(state.copyWith(status: AuthStatus.unauthenticated)));
       }
     }
   }
 
   Future<void> logOut() async {
-    final bool isLogout = await logoutUsecase();
+    final bool isLogout = await logoutUseCase();
 
     if (isLogout) {
-      add(SetAuthStatusEvent(AuthInitial()));
+      add(SetAuthStatusEvent(state.copyWith(status: AuthStatus.unauthenticated)));
     }
   }
 }

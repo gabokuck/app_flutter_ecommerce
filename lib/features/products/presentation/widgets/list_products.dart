@@ -29,9 +29,7 @@ class ListProducts extends StatelessWidget {
             ),
             child: SizedBox(
               width: double.infinity,
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
+              child: Column(
                 children: state.products.map((product) {
                   return ItemProduct(
                     product: product,

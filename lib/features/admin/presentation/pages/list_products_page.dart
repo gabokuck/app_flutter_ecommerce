@@ -40,15 +40,15 @@ class ListProductsPage extends StatelessWidget {
         ),
         body: BlocBuilder<ProductsBloc, ProductsState>(
           builder: (context, state) {
-            if (state is ProductsLoading) {
+            if (state.status == ProductStatus.loading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is ProductsError) {
+            } else if (state.status == ProductStatus.error) {
               return Center(
-                child: Text(state.message),
+                child: Text(state.errorMessage ?? 'An error occurred'),
               );
-            } else if (state is ProductsLoaded) {
+            } else if (state.status == ProductStatus.success) {
               return Padding(
                 padding: EdgeInsets.only(
                   top: 0,
@@ -60,11 +60,9 @@ class ListProductsPage extends StatelessWidget {
                   child: ListView(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    children: state.products.map((product) {
-                      return ItemProductAdmin(
-                        product: product,
-                      );
-                    }).toList(),
+                    children: state.products!
+                        .map((product) => ItemProductAdmin(product: product))
+                        .toList(),
                   ),
                 ),
               );

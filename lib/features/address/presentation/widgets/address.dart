@@ -1,22 +1,32 @@
+import 'package:app_ventas/features/auth/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Address extends StatelessWidget {
-  const Address({
+class NameWidget extends StatelessWidget {
+  const NameWidget({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Row(
-        children: [
-          Text(
-            '26 de Enero de 1857',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state.isAuthenticated) {
+          return SizedBox(
+            child: Text(
+              'Hola, ${state.user?.names}',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          );
+        }
+
+        return SizedBox(
+          child: Text(
+            'Hola, invitado',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Icon(Icons.expand_more),
-        ],
-      ),
+        );
+      },
     );
   }
 }

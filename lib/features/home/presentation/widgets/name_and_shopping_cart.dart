@@ -2,8 +2,8 @@ import 'package:app_ventas/features/address/presentation/widgets/address.dart';
 import 'package:app_ventas/features/shoppingCart/presentation/widgets/shopping_cart.dart';
 import 'package:flutter/material.dart';
 
-class AddressAndShoppingCart extends StatelessWidget {
-  const AddressAndShoppingCart({super.key});
+class NameAndShoppingCart extends StatelessWidget {
+  const NameAndShoppingCart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class AddressAndShoppingCart extends StatelessWidget {
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Address(),
+          NameWidget(),
           ShoppingCart(),
         ],
       )),

@@ -30,6 +30,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (result) {
         await checkAuthStatus();
         emit(state.copyWith(status: AuthStatus.authenticated));
+      }else{
+        emit(state.copyWith(status: AuthStatus.unauthenticated));
       }
     } catch (e) {
       if (e is AppNetworkException) {
@@ -53,6 +55,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else {
         add(SetAuthStatusEvent(state.copyWith(status: AuthStatus.unauthenticated)));
       }
+    }else{
+      add(SetAuthStatusEvent(state.copyWith(status: AuthStatus.unauthenticated)));
     }
   }
 

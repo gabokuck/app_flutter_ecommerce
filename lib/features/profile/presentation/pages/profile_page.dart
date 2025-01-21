@@ -11,14 +11,15 @@ class ProfilePage extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return Scaffold(
-            appBar: AppBar(actions: listActionsProfile),
+            appBar: AppBar(
+              actions: listActionsProfile),
             body: ListView(
               padding: EdgeInsets.symmetric(horizontal: 20),
               children: [
-                if (state.status  == AuthStatus.authenticated) UserWidget(),
-                if (state.status  == AuthStatus.authenticated) PointsUserWidget(),
-                if (state.status  == AuthStatus.authenticated) LogOutButtonWidget(),
-                if (state.status  != AuthStatus.authenticated) NotAuthWidget(),
+                if (state.isAuthenticated) UserWidget(),
+                if (state.isAuthenticated) PointsUserWidget(),
+                if (state.isAuthenticated) LogOutButtonWidget(),
+                if (state.isUnauthenticated) NotAuthWidget(),
               ],
             ));
       },
@@ -158,7 +159,7 @@ class UserWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        if (state.status  == AuthStatus.authenticated) {
+        if (state.isAuthenticated) {
           return SizedBox(
             width: double.infinity,
             height: 120,

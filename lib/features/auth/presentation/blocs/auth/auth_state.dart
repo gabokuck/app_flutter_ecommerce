@@ -15,6 +15,11 @@ class AuthState extends Equatable {
     this.token,
   });
 
+  get isUnauthenticated => status == AuthStatus.unauthenticated;
+  get isAuthenticated => status == AuthStatus.authenticated;
+  get isLoading => status == AuthStatus.loading;
+  get isError => status == AuthStatus.error;
+
   AuthState copyWith({
     AuthStatus? status,
     String? errorMessage,
@@ -30,6 +35,14 @@ class AuthState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status, errorMessage, user, token];
+  List<Object?> get props => [
+        status,
+        errorMessage,
+        user,
+        token,
+        isAuthenticated,
+        isUnauthenticated,
+        isLoading,
+        isError
+      ];
 }
-

@@ -1,5 +1,6 @@
 import 'package:app_ventas/core/core.dart';
 import 'package:app_ventas/features/auth/data/models/models.dart';
+import 'package:app_ventas/features/bottomNavigation/presentation/blocs/blocs.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,14 +10,20 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  final BottomNavigationBarCubit bottomNavigationBarCubit;
   final LoginUseCase loginUseCase;
   final LogoutUseCase logoutUseCase;
   final GetLocalBearerToken getLocalBearerToken;
   final GetUserData getUserData;
   final UpdateBearerTokenServiceLocator updateBearerTokenServiceLocator;
 
-  AuthBloc(this.loginUseCase, this.getLocalBearerToken, this.getUserData,
-      this.updateBearerTokenServiceLocator, this.logoutUseCase)
+  AuthBloc(
+      {required this.loginUseCase,
+      required this.getLocalBearerToken,
+      required this.getUserData,
+      required this.updateBearerTokenServiceLocator,
+      required this.logoutUseCase,
+      required this.bottomNavigationBarCubit})
       : super(AuthState()) {
     on<LoginEvent>(_loginEvent);
     on<SetAuthStatusEvent>(_setAuthStatus);
@@ -30,7 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (result) {
         await checkAuthStatus();
         emit(state.copyWith(status: AuthStatus.authenticated));
-      }else{
+      } else {
         emit(state.copyWith(status: AuthStatus.unauthenticated));
       }
     } catch (e) {
@@ -51,20 +58,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final userData = await getUserData();
       if (userData != null) {
         add(SetAuthStatusEvent(state.copyWith(
-            status: AuthStatus.authenticated, user: userData.user as UserModel)));
+            status: AuthStatus.authenticated,
+            user: userData.user as UserModel)));
       } else {
-        add(SetAuthStatusEvent(state.copyWith(status: AuthStatus.unauthenticated)));
+        add(SetAuthStatusEvent(
+            state.copyWith(status: AuthStatus.unauthenticated)));
       }
-    }else{
-      add(SetAuthStatusEvent(state.copyWith(status: AuthStatus.unauthenticated)));
+    } else {
+      add(SetAuthStatusEvent(
+          state.copyWith(status: AuthStatus.unauthenticated)));
     }
   }
 
   Future<void> logOut() async {
+    bottomNavigationBarCubit.changePageIndexValue(0);
     final bool isLogout = await logoutUseCase();
 
     if (isLogout) {
-      add(SetAuthStatusEvent(state.copyWith(status: AuthStatus.unauthenticated)));
+      add(SetAuthStatusEvent(
+          state.copyWith(status: AuthStatus.unauthenticated)));
     }
   }
 }

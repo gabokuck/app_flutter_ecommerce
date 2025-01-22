@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state.status  == AuthStatus.authenticated) {
-            context.read<PageIndexCubit>().changePageIndexValue(0);
+            context.read<BottomNavigationBarCubit>().changePageIndexValue(0);
           } else if (state.status  == AuthStatus.error) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMessage ?? '')));

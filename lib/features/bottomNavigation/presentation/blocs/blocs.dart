@@ -1,1 +1,1 @@
-export './pageIndex/page_index_cubit.dart';
+export 'bottomNavigationBarCubit/bottom_navigation_bar_cubit.dart';

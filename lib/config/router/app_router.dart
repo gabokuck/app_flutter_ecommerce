@@ -56,20 +56,15 @@ final _publicRouter = GoRouter(initialLocation: '/home', routes: [
 class RouterCubit extends Cubit<GoRouter> {
   RouterCubit() : super(_publicRouter);
 
-  void goToHome(int pageIndex) {
-    switch (pageIndex) {
-      case 0:
-        state.go('/home');
-        break;
-      case 1:
-        state.go('/admin');
-        break;
-      case 2:
-        state.go('/orders');
-        break;
-      case 3:
-        state.go('/profile');
-        break;
-    }
+  void goToHome() {
+    state.go('/home');
+  }
+
+  void goToRouter(int pageIndex, {int? totalPages}) {
+    final pages = totalPages == 4
+        ? ['/home', '/admin', '/orders', '/profile']
+        : ['/home', '/orders', '/profile'];
+
+    state.go(pages[pageIndex]);
   }
 }

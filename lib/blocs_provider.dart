@@ -1,6 +1,6 @@
 import 'package:app_ventas/config/router/app_router.dart';
 import 'package:app_ventas/features/auth/presentation/blocs/blocs.dart';
-import 'package:app_ventas/features/bottomNavigation/presentation/blocs/pageIndex/page_index_cubit.dart';
+import 'package:app_ventas/features/bottomNavigation/presentation/blocs/bottomNavigationBarCubit/bottom_navigation_bar_cubit.dart';
 import 'package:app_ventas/features/categories/presentation/blocs/categories/categories_bloc.dart';
 import 'package:app_ventas/features/products/presentation/blocs/products/products_bloc.dart';
 import 'package:app_ventas/service_locator.dart';
@@ -19,7 +19,7 @@ class BlocsProvider extends StatelessWidget {
         create: (_) => getIt<AuthBloc>(),
         lazy: false,
       ),
-      BlocProvider(create: (_) => getIt<PageIndexCubit>()),
+      BlocProvider(create: (_) => getIt<BottomNavigationBarCubit>()),
       BlocProvider(
         create: (_) => getIt<CategoriesBloc>()..add(LoadCategoriesEvent()),
         lazy: false,

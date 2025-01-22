@@ -38,11 +38,14 @@ Future<void> serviceLocatorInit() async {
   // ** Router **
   getIt.registerSingleton<RouterCubit>(RouterCubit());
 
-  // ** Auth **
-  // BloC
-  getIt.registerFactory(
-      () => AuthBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
+  // ** Bottom navigation **
+  getIt.registerLazySingleton(() => PageIndexRepositoryImpl());
+  getIt.registerLazySingleton<BottomNavigationBarCubit>(() => BottomNavigationBarCubit(
+      pageIndexRepository: getIt<PageIndexRepositoryImpl>(),
+      routerCubit: getIt<RouterCubit>(),
+  ));
 
+  // ** Auth **
   // Use cases
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));
   getIt.registerLazySingleton(() => LogoutUseCase(getIt()));
@@ -66,12 +69,19 @@ Future<void> serviceLocatorInit() async {
     () => AuthLocalDataSourceImpl(sharedPreferences: sharedPref),
   );
 
-  // ** Bottom navigation **
-  getIt.registerLazySingleton(() => PageIndexRepositoryImpl());
+  // BloC
+  getIt.registerFactory<AuthBloc>(
+      () => AuthBloc(
+            loginUseCase: getIt<LoginUseCase>(),
+            logoutUseCase: getIt<LogoutUseCase>(),
+            getLocalBearerToken: getIt<GetLocalBearerToken>(),
+            getUserData: getIt<GetUserData>(),
+            updateBearerTokenServiceLocator: getIt<UpdateBearerTokenServiceLocator>(),
+            bottomNavigationBarCubit: getIt<BottomNavigationBarCubit>(),
+          ));
 
-  getIt.registerSingleton<PageIndexCubit>(PageIndexCubit(
-      pageIndexRepository: getIt<PageIndexRepositoryImpl>(),
-      routerCubit: getIt<RouterCubit>()));
+  // Set AuthBloc in BottomNavigationBarCubit
+  getIt<BottomNavigationBarCubit>().setAuthBloc(getIt<AuthBloc>());
 
   // ** Products **
   // blocs

@@ -42,7 +42,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     emit(state.copyWith(status: ProductStatus.loading));
     try {
       await addProduct(event.product);
-      routerCubit.goToHome(1);
+      routerCubit.goToRouter(1);
       add(LoadProductsEvent());
     } catch (e) {
       if (e is AppNetworkException) {
@@ -56,7 +56,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     emit(state.copyWith(status: ProductStatus.loading));
     try {
       await addProduct(event.product);
-      routerCubit.goToHome(1);
+      routerCubit.goToRouter(1);
       add(LoadProductsEvent());
     } catch (e) {
       if (e is AppNetworkException) {

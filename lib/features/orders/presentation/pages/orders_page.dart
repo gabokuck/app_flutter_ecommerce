@@ -1,13 +1,20 @@
+import 'package:app_ventas/features/auth/presentation/blocs/blocs.dart';
+import 'package:app_ventas/features/profile/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarOrders,
-      body: ListOrdersWidget(),
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: appBarOrders,
+          body: state.isAuthenticated ? ListOrdersWidget() : NotAuthWidget(),
+        );
+      },
     );
   }
 }

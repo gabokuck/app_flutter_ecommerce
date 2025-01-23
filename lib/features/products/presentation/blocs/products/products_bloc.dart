@@ -11,16 +11,19 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final RouterCubit routerCubit;
   final GetListProducts getListProducts;
   final AddProduct addProduct;
+  final SearchByCategory searchByCategory;
 
-  ProductsBloc(
-      {required this.addProduct,
-      required this.getListProducts,
-      required this.routerCubit,})
-      : super(ProductsState()) {
+  ProductsBloc({
+    required this.searchByCategory,
+    required this.addProduct,
+    required this.getListProducts,
+    required this.routerCubit,
+  }) : super(ProductsState()) {
     on<LoadProductsEvent>(_loadListProductsEvent);
     on<AddProductEvent>(_addProductEvent);
     on<UpdateProductEvent>(_updateProductEvent);
     on<DeleteProductEvent>(_deleteProductEvent);
+    on<SearchByCategoryEvent>(_searchByCategoryEvent);
   }
 
   Future<void> _loadListProductsEvent(
@@ -28,6 +31,20 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     emit(state.copyWith(status: ProductStatus.loading));
     try {
       final products = await getListProducts();
+      emit(state.copyWith(status: ProductStatus.success, products: products));
+    } catch (e) {
+      emit(state.copyWith(
+        status: ProductStatus.error,
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> _searchByCategoryEvent(
+      SearchByCategoryEvent event, Emitter<ProductsState> emit) async {
+    emit(state.copyWith(status: ProductStatus.loading));
+    try {
+      final products = await searchByCategory(event.category);
       emit(state.copyWith(status: ProductStatus.success, products: products));
     } catch (e) {
       emit(state.copyWith(
@@ -46,7 +63,8 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       add(LoadProductsEvent());
     } catch (e) {
       if (e is AppNetworkException) {
-        emit(state.copyWith(status: ProductStatus.error, errorMessage: e.message));
+        emit(state.copyWith(
+            status: ProductStatus.error, errorMessage: e.message));
       }
     }
   }
@@ -60,7 +78,8 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       add(LoadProductsEvent());
     } catch (e) {
       if (e is AppNetworkException) {
-        emit(state.copyWith(status: ProductStatus.error, errorMessage: e.message));
+        emit(state.copyWith(
+            status: ProductStatus.error, errorMessage: e.message));
       }
     }
   }

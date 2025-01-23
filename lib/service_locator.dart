@@ -40,10 +40,11 @@ Future<void> serviceLocatorInit() async {
 
   // ** Bottom navigation **
   getIt.registerLazySingleton(() => PageIndexRepositoryImpl());
-  getIt.registerLazySingleton<BottomNavigationBarCubit>(() => BottomNavigationBarCubit(
-      pageIndexRepository: getIt<PageIndexRepositoryImpl>(),
-      routerCubit: getIt<RouterCubit>(),
-  ));
+  getIt.registerLazySingleton<BottomNavigationBarCubit>(
+      () => BottomNavigationBarCubit(
+            pageIndexRepository: getIt<PageIndexRepositoryImpl>(),
+            routerCubit: getIt<RouterCubit>(),
+          ));
 
   // ** Auth **
   // Use cases
@@ -70,15 +71,15 @@ Future<void> serviceLocatorInit() async {
   );
 
   // BloC
-  getIt.registerFactory<AuthBloc>(
-      () => AuthBloc(
-            loginUseCase: getIt<LoginUseCase>(),
-            logoutUseCase: getIt<LogoutUseCase>(),
-            getLocalBearerToken: getIt<GetLocalBearerToken>(),
-            getUserData: getIt<GetUserData>(),
-            updateBearerTokenServiceLocator: getIt<UpdateBearerTokenServiceLocator>(),
-            bottomNavigationBarCubit: getIt<BottomNavigationBarCubit>(),
-          ));
+  getIt.registerFactory<AuthBloc>(() => AuthBloc(
+        loginUseCase: getIt<LoginUseCase>(),
+        logoutUseCase: getIt<LogoutUseCase>(),
+        getLocalBearerToken: getIt<GetLocalBearerToken>(),
+        getUserData: getIt<GetUserData>(),
+        updateBearerTokenServiceLocator:
+            getIt<UpdateBearerTokenServiceLocator>(),
+        bottomNavigationBarCubit: getIt<BottomNavigationBarCubit>(),
+      ));
 
   // Set AuthBloc in BottomNavigationBarCubit
   getIt<BottomNavigationBarCubit>().setAuthBloc(getIt<AuthBloc>());
@@ -87,6 +88,7 @@ Future<void> serviceLocatorInit() async {
   // blocs
   getIt.registerFactory(() => ProductsBloc(
         getListProducts: getIt<GetListProducts>(),
+        searchByCategory: getIt<SearchByCategory>(),
         addProduct: getIt<AddProduct>(),
         routerCubit: getIt<RouterCubit>(),
       ));
@@ -96,6 +98,8 @@ Future<void> serviceLocatorInit() async {
       () => GetListProducts(getIt<ProductRepository>()));
   getIt.registerLazySingleton<AddProduct>(
       () => AddProduct(getIt<ProductRepository>()));
+  getIt.registerLazySingleton<SearchByCategory>(
+      () => SearchByCategory(getIt<ProductRepository>()));
   // Repositories
   getIt.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(

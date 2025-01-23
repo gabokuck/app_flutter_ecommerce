@@ -32,4 +32,9 @@ class ProductRepositoryImpl extends ProductRepository {
     // TODO: implement updateProduct
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<ProductEntity>> searchByCategory(String category) async {
+    return await remoteDataSource.searchByCategory(category);
+  }
 }

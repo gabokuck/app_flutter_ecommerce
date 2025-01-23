@@ -29,3 +29,10 @@ class DeleteProductEvent extends ProductsEvent {
   @override
   List<Object?> get props => [product];
 }
+
+class SearchByCategoryEvent extends ProductsEvent {
+  final String category;
+  const SearchByCategoryEvent(this.category);
+  @override
+  List<Object?> get props => [category];
+}

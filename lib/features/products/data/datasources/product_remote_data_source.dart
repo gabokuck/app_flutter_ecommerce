@@ -8,6 +8,7 @@ abstract class ProductRemoteDataSource {
   Future<void> addProduct(AddProductModel product);
   Future<void> updateProduct(ProductModel product);
   Future<void> deleteProduct(String id);
+  Future<List<ProductModel>> searchByCategory(String category);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -53,5 +54,18 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<void> updateProduct(ProductModel product) {
     // TODO: implement updateProduct
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<ProductModel>> searchByCategory(String category) async {
+    final response =
+        await client.get('/products', queryParameters: {'category': category});
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((product) => ProductModel.fromJson(product))
+          .toList();
+    } else {
+      throw Exception('Failed to load Categories list');
+    }
   }
 }

@@ -21,6 +21,30 @@ class ListProducts extends StatelessWidget {
             child: Text(state.errorMessage ?? 'An error occurred'),
           );
         } else if (state.status == ProductStatus.success) {
+          if (state.products!.isEmpty) {
+            return Padding(
+              padding: EdgeInsets.only(
+                top: 30,
+              ),
+              child: Center(
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.warning_amber_outlined,
+                      size: 70,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Productos no disponibles',
+                      style: TextStyle(color: Colors.grey, fontSize: 17),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
           return Padding(
             padding: EdgeInsets.only(
               top: 0,

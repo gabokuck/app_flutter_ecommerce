@@ -8,15 +8,15 @@ class InputSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'Buscar en tienda',
-          prefixIcon: Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    );
+        child: SearchAnchor.bar(
+            barHintText: 'Buscar productos',
+            onChanged: (value) {
+              print(value);
+            },
+            suggestionsBuilder: (context, controller) {
+              return <Widget>[
+                Text('Sugerencia 1'),
+              ];
+            }));
   }
 }

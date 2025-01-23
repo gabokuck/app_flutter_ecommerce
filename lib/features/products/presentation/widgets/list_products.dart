@@ -1,5 +1,5 @@
 import 'package:app_ventas/features/products/presentation/blocs/products/products_bloc.dart';
-import 'package:app_ventas/features/products/presentation/widgets/item_product.dart';
+import 'package:app_ventas/features/products/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,27 +22,7 @@ class ListProducts extends StatelessWidget {
           );
         } else if (state.status == ProductStatus.success) {
           if (state.products!.isEmpty) {
-            return Padding(
-              padding: EdgeInsets.only(
-                top: 30,
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.warning_amber_outlined,
-                      size: 70,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Productos no disponibles',
-                      style: TextStyle(color: Colors.grey, fontSize: 17),
-                    ),
-                  ],
-                ),
-              ),
-            );
+            return ProductNotDisponible();
           }
 
           return Padding(

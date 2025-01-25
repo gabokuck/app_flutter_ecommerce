@@ -32,12 +32,12 @@ class InputSearch extends StatelessWidget {
                 },
               ),
             ],
-            // onChanged: (value) {
-            //   if (value.isEmpty) {
-            //     context.read<ProductsBloc>().add(LoadProductsEvent());
-            //   }
-            //   context.read<ProductsBloc>().add(SearchByQueryEvent(value));
-            // },
+            onChanged: (value) {
+              if (value.isEmpty) {
+                context.read<ProductsBloc>().add(LoadProductsEvent());
+              }
+              // context.read<ProductsBloc>().add(SearchByQueryEvent(value));
+            },
 
             // suggestionsBuilder: (context, controller) async {
             //   return state.products

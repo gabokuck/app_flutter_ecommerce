@@ -37,4 +37,9 @@ class ProductRepositoryImpl extends ProductRepository {
   Future<List<ProductEntity>> searchByCategory(String category) async {
     return await remoteDataSource.searchByCategory(category);
   }
+
+  @override
+  Future<List<ProductEntity>> searchByQuery(String query) {
+    return remoteDataSource.searchByQuery(query);
+  }
 }

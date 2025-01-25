@@ -12,18 +12,21 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final GetListProducts getListProducts;
   final AddProduct addProduct;
   final SearchByCategory searchByCategory;
+  final SearchByQuery searchByQuery;
 
   ProductsBloc({
     required this.searchByCategory,
     required this.addProduct,
     required this.getListProducts,
     required this.routerCubit,
+    required this.searchByQuery,
   }) : super(ProductsState()) {
     on<LoadProductsEvent>(_loadListProductsEvent);
     on<AddProductEvent>(_addProductEvent);
     on<UpdateProductEvent>(_updateProductEvent);
     on<DeleteProductEvent>(_deleteProductEvent);
     on<SearchByCategoryEvent>(_searchByCategoryEvent);
+    on<SearchByQueryEvent>(_searchByQueryEvent);
   }
 
   Future<void> _loadListProductsEvent(
@@ -45,6 +48,20 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     emit(state.copyWith(status: ProductStatus.loading));
     try {
       final products = await searchByCategory(event.category);
+      emit(state.copyWith(status: ProductStatus.success, products: products));
+    } catch (e) {
+      emit(state.copyWith(
+        status: ProductStatus.error,
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> _searchByQueryEvent(
+      SearchByQueryEvent event, Emitter<ProductsState> emit) async {
+    emit(state.copyWith(status: ProductStatus.loading));
+    try {
+      final products = await searchByQuery(event.query);
       emit(state.copyWith(status: ProductStatus.success, products: products));
     } catch (e) {
       emit(state.copyWith(

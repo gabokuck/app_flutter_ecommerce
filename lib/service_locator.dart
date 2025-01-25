@@ -91,6 +91,7 @@ Future<void> serviceLocatorInit() async {
         searchByCategory: getIt<SearchByCategory>(),
         addProduct: getIt<AddProduct>(),
         routerCubit: getIt<RouterCubit>(),
+        searchByQuery: getIt<SearchByQuery>(),
       ));
 
   // useCases
@@ -100,6 +101,8 @@ Future<void> serviceLocatorInit() async {
       () => AddProduct(getIt<ProductRepository>()));
   getIt.registerLazySingleton<SearchByCategory>(
       () => SearchByCategory(getIt<ProductRepository>()));
+  getIt.registerLazySingleton<SearchByQuery>(
+      () => SearchByQuery(getIt<ProductRepository>()));
   // Repositories
   getIt.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(

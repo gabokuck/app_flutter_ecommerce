@@ -9,6 +9,7 @@ abstract class ProductRemoteDataSource {
   Future<void> updateProduct(ProductModel product);
   Future<void> deleteProduct(String id);
   Future<List<ProductModel>> searchByCategory(String category);
+  Future<List<ProductModel>> searchByQuery(String query);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -16,10 +17,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final String bearerToken;
 
   ProductRemoteDataSourceImpl(
-      {required this.bearerToken, required this.client}) {
-    print(bearerToken);
-  }
-
+      {required this.bearerToken, required this.client});
   @override
   Future<List<ProductModel>> getProducts() async {
     final response = await client.get('/products');
@@ -60,6 +58,19 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<List<ProductModel>> searchByCategory(String category) async {
     final response =
         await client.get('/products', queryParameters: {'category': category});
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((product) => ProductModel.fromJson(product))
+          .toList();
+    } else {
+      throw Exception('Failed to load Categories list');
+    }
+  }
+
+  @override
+  Future<List<ProductModel>> searchByQuery(String query) async {
+    final response =
+        await client.get('/products', queryParameters: {'query': query});
     if (response.statusCode == 200) {
       return (response.data as List)
           .map((product) => ProductModel.fromJson(product))

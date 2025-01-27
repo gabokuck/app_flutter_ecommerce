@@ -110,7 +110,7 @@ Future<void> serviceLocatorInit() async {
   );
   // Datasources
   getIt.registerLazySingleton<ProductRemoteDataSource>(
-    () => ProductRemoteDataSourceImpl(client: getIt<Dio>(), bearerToken: ''),
+    () => ProductRemoteDataSourceImpl(client: getIt<Dio>()),
   );
 
   // ** Categories **

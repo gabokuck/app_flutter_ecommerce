@@ -14,10 +14,8 @@ abstract class ProductRemoteDataSource {
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final Dio client;
-  final String bearerToken;
 
-  ProductRemoteDataSourceImpl(
-      {required this.bearerToken, required this.client});
+  ProductRemoteDataSourceImpl({required this.client});
   @override
   Future<List<ProductModel>> getProducts() async {
     final response = await client.get('/products');

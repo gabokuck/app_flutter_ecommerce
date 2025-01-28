@@ -15,10 +15,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   Future<void> _loadListOrdersEvent(
       LoadOrdersEvent event, Emitter<OrdersState> emit) async {
-    print('orders');
     emit(state.copyWith(status: OrderStatus.loading));
     try {
-      final orders = await getListOrders();
+      final orders = await getListOrders(event.userId);
       emit(state.copyWith(status: OrderStatus.success, orders: orders));
     } catch (e) {
       emit(state.copyWith(

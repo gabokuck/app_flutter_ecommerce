@@ -18,7 +18,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             icon: Icon(Icons.home),
             label: 'Inicio',
           ),
-          if (authBloc.state.isAuthenticated)
+          if (authBloc.state.isAdmin || authBloc.state.isMaster)
             BottomNavigationBarItem(
               icon: Icon(Icons.admin_panel_settings_rounded),
               label: 'Admin',

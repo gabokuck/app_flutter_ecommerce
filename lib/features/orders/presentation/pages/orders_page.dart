@@ -15,7 +15,11 @@ class OrdersPage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: appBarOrders,
-          body: state.isAuthenticated ? ListOrdersWidget() : NotAuthWidget(),
+          body: state.isAuthenticated
+              ? ListOrdersWidget(
+                  userId: state.user!.id,
+                )
+              : NotAuthWidget(),
         );
       },
     );
@@ -23,14 +27,16 @@ class OrdersPage extends StatelessWidget {
 }
 
 class ListOrdersWidget extends StatelessWidget {
+  final String userId;
   const ListOrdersWidget({
     super.key,
+    required this.userId,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrdersBloc, OrdersState>(
-      bloc: getIt<OrdersBloc>()..add(LoadOrdersEvent()),
+      bloc: getIt<OrdersBloc>()..add(LoadOrdersEvent(userId: userId)),
       builder: (context, state) {
         if (state.status == OrderStatus.loading) {
           return Center(
@@ -41,6 +47,12 @@ class ListOrdersWidget extends StatelessWidget {
         if (state.status == OrderStatus.error) {
           return Center(
             child: Text(state.errorMessage ?? 'Error'),
+          );
+        }
+
+        if (state.orders == null || state.orders!.isEmpty) {
+          return Center(
+            child: Text('No hay pedidos'),
           );
         }
 

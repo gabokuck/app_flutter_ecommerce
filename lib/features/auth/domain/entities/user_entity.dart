@@ -27,34 +27,21 @@ class UserEntity {
       required this.updatedAt,
       required this.deletedAt,
       required this.roles});
-}
 
-class User {
-  String id;
-  String email;
-  String names;
-  String surnames;
-  String phone;
-  dynamic lastLoginDate;
-  String notificationToken;
-  bool isEmailConfirmed;
-  DateTime createdAt;
-  DateTime updatedAt;
-  dynamic deletedAt;
-  List<RoleEntity> roles;
-
-  User({
-    required this.id,
-    required this.email,
-    required this.names,
-    required this.surnames,
-    required this.phone,
-    required this.lastLoginDate,
-    required this.notificationToken,
-    required this.isEmailConfirmed,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
-    required this.roles,
-  });
+  static UserEntity reset() {
+    return UserEntity(
+      id: '',
+      email: '',
+      names: '',
+      surnames: '',
+      phone: '',
+      lastLoginDate: '',
+      notificationToken: '',
+      isEmailConfirmed: false,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      deletedAt: '',
+      roles: [],
+    );
+  }
 }

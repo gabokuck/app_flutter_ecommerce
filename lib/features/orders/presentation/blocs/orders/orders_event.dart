@@ -7,4 +7,8 @@ sealed class OrdersEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadOrdersEvent extends OrdersEvent {}
+class LoadOrdersEvent extends OrdersEvent {
+  final String userId;
+
+  const LoadOrdersEvent({required this.userId});
+}

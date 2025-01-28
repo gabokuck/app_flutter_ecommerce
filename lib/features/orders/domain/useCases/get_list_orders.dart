@@ -6,7 +6,7 @@ class GetListOrders {
 
   GetListOrders(this.repository);
 
-  Future<List<OrderEntity>> call() async {
-    return await repository.getListOrders();
+  Future<List<OrderEntity>> call(String userId) async {
+    return await repository.getListOrders(userId);
   }
 }

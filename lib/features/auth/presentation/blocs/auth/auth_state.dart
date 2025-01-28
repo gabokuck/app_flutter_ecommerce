@@ -5,7 +5,7 @@ enum AuthStatus { initial, loading, authenticated, unauthenticated, error }
 class AuthState extends Equatable {
   final AuthStatus status;
   final String? errorMessage;
-  final UserModel? user;
+  final UserEntity? user;
   final String? token;
 
   const AuthState({
@@ -19,11 +19,13 @@ class AuthState extends Equatable {
   get isAuthenticated => status == AuthStatus.authenticated;
   get isLoading => status == AuthStatus.loading;
   get isError => status == AuthStatus.error;
+  bool get isAdmin => user?.roles.any((role) => role.id == 'ADMIN') ?? false;
+  bool get isMaster => user?.roles.any((role) => role.id == 'MASTER') ?? false;
 
   AuthState copyWith({
     AuthStatus? status,
     String? errorMessage,
-    UserModel? user,
+    UserEntity? user,
     String? token,
   }) {
     return AuthState(
@@ -31,6 +33,15 @@ class AuthState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       user: user ?? this.user,
       token: token ?? this.token,
+    );
+  }
+
+  AuthState reset() {
+    return AuthState(
+      status: AuthStatus.initial,
+      errorMessage: null,
+      user: UserEntity.reset(),
+      token: null,
     );
   }
 

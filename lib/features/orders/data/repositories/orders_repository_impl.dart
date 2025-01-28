@@ -8,7 +8,7 @@ class OrdersRepositoryImpl extends OrdersRepository {
   OrdersRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<OrderEntity>> getListOrders() async {
-    return await remoteDataSource.getOrders();
+  Future<List<OrderEntity>> getListOrders(String userId) async {
+    return await remoteDataSource.getOrders(userId);
   }
 }

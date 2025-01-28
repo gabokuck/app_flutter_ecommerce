@@ -1,5 +1,6 @@
 import 'package:app_ventas/core/core.dart';
 import 'package:app_ventas/features/auth/data/models/models.dart';
+import 'package:app_ventas/features/auth/domain/entities/entities.dart';
 import 'package:app_ventas/features/bottomNavigation/presentation/blocs/blocs.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,8 +76,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final bool isLogout = await logoutUseCase();
 
     if (isLogout) {
-      add(SetAuthStatusEvent(
-          state.copyWith(status: AuthStatus.unauthenticated)));
+      state.reset();
+      add(SetAuthStatusEvent(state.copyWith(
+          status: AuthStatus.unauthenticated, user: state.reset().user)));
     }
   }
 }

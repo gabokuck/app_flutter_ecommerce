@@ -38,6 +38,11 @@ class GridViewAdminWidget extends StatelessWidget {
           icon: Icons.propane_tank_rounded,
           route: '/list-products',
         ),
+        ItemAdminWidget(
+          text: 'Pedidos',
+          icon: Icons.all_inbox_rounded,
+          route: '/list-products',
+        ),
       ],
     );
   }

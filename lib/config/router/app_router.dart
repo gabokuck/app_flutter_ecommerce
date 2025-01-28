@@ -3,6 +3,7 @@ import 'package:app_ventas/features/auth/presentation/pages/login_page.dart';
 import 'package:app_ventas/features/bottomNavigation/presentation/pages/scaffold_whit_bottom_navigation_bar_page.dart';
 import 'package:app_ventas/features/home/presentation/pages/home_page.dart';
 import 'package:app_ventas/features/orders/presentation/pages/orders_page.dart';
+import 'package:app_ventas/features/points/points.dart';
 import 'package:app_ventas/features/products/presentation/pages/product_detail_page.dart';
 import 'package:app_ventas/features/profile/presentation/pages/profile_page.dart';
 
@@ -29,6 +30,7 @@ final _publicRouter = GoRouter(initialLocation: '/home', routes: [
         GoRoute(path: '/orders', builder: (context, state) => OrdersPage()),
         GoRoute(path: '/profile', builder: (context, state) => ProfilePage()),
         GoRoute(path: '/login', builder: (context, state) => LoginPage()),
+        GoRoute(path: '/points', builder: (context, state) => PointsPage()),
         GoRoute(
             path: '/product-detail/:id',
             builder: (context, state) {

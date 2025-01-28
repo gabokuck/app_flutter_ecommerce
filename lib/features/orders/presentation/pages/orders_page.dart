@@ -1,3 +1,4 @@
+import 'package:app_ventas/core/helpers/helpers.dart';
 import 'package:app_ventas/features/auth/presentation/blocs/blocs.dart';
 import 'package:app_ventas/features/orders/domain/entities/entities.dart';
 import 'package:app_ventas/features/orders/presentation/blocs/blocs.dart';
@@ -140,7 +141,7 @@ class ItemListOrder extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${order.createdAt}',
+                      FormatDate.format(order.createdAt),
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontSize: 10,

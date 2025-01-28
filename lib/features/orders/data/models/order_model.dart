@@ -17,14 +17,13 @@ class OrderModel extends OrderEntity {
     return OrderModel(
       id: json['id'],
       total: json['total'],
-      totalPoints: json['total_points'],
+      totalPoints: json['totalPoints'],
       status: json['status'],
       observations: json['observations'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
-      deletedAt: json['deleted_at'] == null
-          ? null
-          : DateTime.parse(json['deleted_at']),
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+      deletedAt:
+          json['deleted_at'] == null ? '' : DateTime.parse(json['deletedAt']),
       items: List<ItemOrderEntity>.from(
           json["items"].map((x) => ItemOrderModel.fromJson(x))),
     );
@@ -34,12 +33,12 @@ class OrderModel extends OrderEntity {
     return {
       'id': id,
       'total': total,
-      'total_points': totalPoints,
+      'totalPoints': totalPoints,
       'status': status,
       'observations': observations,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
-      'deleted_at': deletedAt?.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+      'deletedAt': deletedAt?.toIso8601String(),
       'items': List<dynamic>.from(
           (items as List<ItemOrderModel>).map((x) => x.toJson())),
     };

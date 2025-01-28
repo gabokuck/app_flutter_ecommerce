@@ -1,6 +1,7 @@
 import 'package:app_ventas/features/auth/presentation/blocs/blocs.dart';
 import 'package:app_ventas/features/orders/presentation/blocs/blocs.dart';
 import 'package:app_ventas/features/profile/presentation/widgets/widgets.dart';
+import 'package:app_ventas/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,6 +29,7 @@ class ListOrdersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrdersBloc, OrdersState>(
+      bloc: getIt<OrdersBloc>()..add(LoadOrdersEvent()),
       builder: (context, state) {
         if (state.status == OrderStatus.loading) {
           return Center(

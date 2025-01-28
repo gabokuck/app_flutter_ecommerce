@@ -11,11 +11,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
   OrdersBloc({required this.getListOrders}) : super(OrdersState()) {
     on<LoadOrdersEvent>(_loadListOrdersEvent);
-    add(LoadOrdersEvent());
   }
 
   Future<void> _loadListOrdersEvent(
       LoadOrdersEvent event, Emitter<OrdersState> emit) async {
+    print('orders');
     emit(state.copyWith(status: OrderStatus.loading));
     try {
       final orders = await getListOrders();

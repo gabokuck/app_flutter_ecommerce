@@ -1,5 +1,6 @@
 import 'package:app_ventas/config/config.dart';
 import 'package:app_ventas/features/auth/auth.dart';
+import 'package:app_ventas/features/orders/orders.dart';
 import 'package:app_ventas/main.dart';
 
 import 'features/bottomNavigation/bottom_navigation.dart';
@@ -128,5 +129,21 @@ Future<void> serviceLocatorInit() async {
   // Datasources
   getIt.registerLazySingleton<CategoryRemoteDataSource>(
     () => CategoryRemoteDataSourceImpl(client: getIt<Dio>()),
+  );
+
+  // ** Orders **
+  // blocs
+  getIt
+      .registerFactory(() => OrdersBloc(getListOrders: getIt<GetListOrders>()));
+  // useCases
+  getIt.registerLazySingleton(() => GetListOrders(getIt<OrdersRepository>()));
+  // Repositories
+  getIt.registerLazySingleton<OrdersRepository>(
+    () =>
+        OrdersRepositoryImpl(remoteDataSource: getIt<OrdersRemoteDataSource>()),
+  );
+  // Datasources
+  getIt.registerLazySingleton<OrdersRemoteDataSource>(
+    () => OrdersRemoteDataSourceImpl(client: getIt<Dio>()),
   );
 }

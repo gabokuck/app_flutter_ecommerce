@@ -1,4 +1,5 @@
 import 'package:app_ventas/features/auth/presentation/blocs/blocs.dart';
+import 'package:app_ventas/features/orders/presentation/blocs/blocs.dart';
 import 'package:app_ventas/features/profile/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,13 +27,27 @@ class ListOrdersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        ItemListOrder(),
-        ItemListOrder(),
-        ItemListOrder(),
-        ItemListOrder(),
-      ],
+    return BlocBuilder<OrdersBloc, OrdersState>(
+      builder: (context, state) {
+        if (state.status == OrderStatus.loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (state.status == OrderStatus.error) {
+          return Center(
+            child: Text(state.errorMessage ?? 'Error'),
+          );
+        }
+
+        return ListView.builder(
+          itemCount: state.orders?.length ?? 0,
+          itemBuilder: (BuildContext context, int index) {
+            return ItemListOrder();
+          },
+        );
+      },
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:app_ventas/features/auth/presentation/blocs/blocs.dart';
+import 'package:app_ventas/features/orders/domain/entities/entities.dart';
 import 'package:app_ventas/features/orders/presentation/blocs/blocs.dart';
 import 'package:app_ventas/features/profile/presentation/widgets/widgets.dart';
 import 'package:app_ventas/service_locator.dart';
@@ -46,7 +47,11 @@ class ListOrdersWidget extends StatelessWidget {
         return ListView.builder(
           itemCount: state.orders?.length ?? 0,
           itemBuilder: (BuildContext context, int index) {
-            return ItemListOrder();
+            final OrderEntity order = state.orders![index];
+            return ItemListOrder(
+              order: order,
+              index: index,
+            );
           },
         );
       },
@@ -55,8 +60,12 @@ class ListOrdersWidget extends StatelessWidget {
 }
 
 class ItemListOrder extends StatelessWidget {
+  final OrderEntity order;
+  final int index;
   const ItemListOrder({
     super.key,
+    required this.order,
+    required this.index,
   });
 
   @override
@@ -71,17 +80,17 @@ class ItemListOrder extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Pedido completado'),
+                Text(order.status.toUpperCase()),
                 SizedBox(
                   height: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      FlutterLogo(
-                        curve: Curves.bounceIn,
-                        size: 100,
-                        style: FlutterLogoStyle.horizontal,
+                      Icon(
+                        Icons.list,
+                        size: 40,
+                        color: Colors.grey,
                       ),
                       SizedBox(
                         width: 10,
@@ -92,24 +101,26 @@ class ItemListOrder extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Pedido 1',
+                              'Pedido ${index + 1}',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text('Puntos: 2'),
+                            Text('Puntos: ${order.totalPoints}'),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                ItemProductOrders(),
-                ItemProductOrders(),
-                ItemProductOrders(),
-                ItemProductOrders(),
-                ItemProductOrders(),
-                ItemProductOrders(),
-                ItemProductOrders(),
-                ItemProductOrders(),
+                // ignore: unnecessary_null_comparison
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: order.items
+                      .map((item) => ItemProductOrders(
+                            item: item,
+                          ))
+                      .toList(),
+                ),
                 SizedBox(
                   height: 10,
                 ),
@@ -117,14 +128,14 @@ class ItemListOrder extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '28/10/2024 5:46 PM',
+                      '${order.createdAt}',
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontSize: 10,
                           color: Colors.grey),
                     ),
                     Text(
-                      'MX\$240.00',
+                      'MX\$${order.total}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -142,13 +153,15 @@ class ItemListOrder extends StatelessWidget {
 }
 
 class ItemProductOrders extends StatelessWidget {
+  final ItemOrderEntity item;
   const ItemProductOrders({
     super.key,
+    required this.item,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Text('Articulo 1');
+    return Text('${item.product.title} x ${item.quantity}');
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:app_ventas/config/config.dart';
 import 'package:app_ventas/features/auth/auth.dart';
+import 'package:app_ventas/features/notifications/notifications.dart';
 import 'package:app_ventas/features/orders/orders.dart';
 import 'package:app_ventas/features/points/points.dart';
 import 'package:app_ventas/main.dart';
@@ -39,6 +40,10 @@ Future<void> serviceLocatorInit() async {
 
   // ** Router **
   getIt.registerSingleton<RouterCubit>(RouterCubit());
+
+  // ** Notifications **
+  // blocs
+  getIt.registerFactory(() => NotificationsBloc());
 
   // ** Bottom navigation **
   getIt.registerLazySingleton(() => PageIndexRepositoryImpl());

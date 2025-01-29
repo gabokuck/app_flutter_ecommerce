@@ -1,8 +1,8 @@
 import 'package:app_ventas/blocs_provider.dart';
 import 'package:app_ventas/config/config.dart';
-import 'package:app_ventas/firebase_options.dart';
+import 'package:app_ventas/features/notifications/notifications.dart';
 import 'package:app_ventas/service_locator.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,11 +13,11 @@ late SharedPreferences sharedPref;
 void main() async {
   await Environment.initEnvironment();
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  await NotificationsBloc.initializeFCM();
+
   // Inicializa la configuración de localización
   await initializeDateFormatting('es_ES', null);
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   sharedPref = await SharedPreferences.getInstance();
   serviceLocatorInit();
   runApp(const BlocsProvider(child: MyApp()));

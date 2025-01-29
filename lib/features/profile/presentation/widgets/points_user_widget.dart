@@ -34,12 +34,10 @@ class PointsUserWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.remove_red_eye,
-                      size: 30,
-                    ))
+                Icon(
+                  Icons.remove_red_eye,
+                  size: 30,
+                )
               ],
             ),
           ),

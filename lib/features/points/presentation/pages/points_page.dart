@@ -35,7 +35,7 @@ class PointsPage extends StatelessWidget {
 
           if (state.points == null || state.points!.isEmpty) {
             return Center(
-              child: Text('No hay pedidos'),
+              child: Text('Por el momento no tienes puntos'),
             );
           }
 

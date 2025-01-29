@@ -53,7 +53,7 @@ class ListOrdersWidget extends StatelessWidget {
 
         if (state.orders == null || state.orders!.isEmpty) {
           return Center(
-            child: Text('No hay pedidos'),
+            child: Text('Por el momento no tienes pedidos'),
           );
         }
 

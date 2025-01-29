@@ -150,10 +150,12 @@ Future<void> serviceLocatorInit() async {
 
   // ** Points **
   // blocs
-  getIt
-      .registerFactory(() => PointsBloc(getListPoints: getIt<GetListPoints>()));
+  getIt.registerFactory(() => PointsBloc(
+      getListPoints: getIt<GetListPoints>(),
+      getTotalPoints: getIt<GetTotalPoints>()));
   // useCases
   getIt.registerLazySingleton(() => GetListPoints(getIt<PointsRepository>()));
+  getIt.registerLazySingleton(() => GetTotalPoints(getIt<PointsRepository>()));
   // Repositories
   getIt.registerLazySingleton<PointsRepository>(
     () => PointsRepositoryImpl(dataSource: getIt<PointsRemoteDataSource>()),

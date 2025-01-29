@@ -9,4 +9,9 @@ class PointsRepositoryImpl implements PointsRepository {
   Future<List<PointEntity>> getListPoints(String userId) async {
     return await dataSource.getListPoints(userId);
   }
+
+  @override
+  Future<TotalPointEntity> getTotalPoints(String userId) {
+    return dataSource.getTotalPoints(userId);
+  }
 }

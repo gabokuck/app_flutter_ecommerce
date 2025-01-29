@@ -13,3 +13,10 @@ class LoadPointsEvent extends PointsEvent {
   @override
   List<Object> get props => [userId];
 }
+
+class LoadTotalPoints extends PointsEvent {
+  final String userId;
+  const LoadTotalPoints(this.userId);
+  @override
+  List<Object> get props => [userId];
+}

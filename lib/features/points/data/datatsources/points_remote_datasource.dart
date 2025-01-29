@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 
 abstract class PointsRemoteDataSource {
   Future<List<PointModel>> getListPoints(String userId);
+  Future<TotalPointsModel> getTotalPoints(String userId);
 }
 
 class PointsRemoteDataSourceImpl implements PointsRemoteDataSource {
@@ -19,7 +20,18 @@ class PointsRemoteDataSourceImpl implements PointsRemoteDataSource {
           .map((product) => PointModel.fromJson(product))
           .toList();
     } else {
-      throw Exception('Failed to load Categories list');
+      throw Exception('Failed to load Points list');
+    }
+  }
+
+  @override
+  Future<TotalPointsModel> getTotalPoints(String userId) async {
+    final response = await client
+        .get('/points/totalPoints', queryParameters: {'idUser': userId});
+    if (response.statusCode == 200) {
+      return TotalPointsModel.fromJson(response.data);
+    } else {
+      throw Exception('Failed to Points  list');
     }
   }
 }

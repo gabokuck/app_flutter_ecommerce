@@ -15,7 +15,7 @@ class OrderPointsModel extends OrderPointsEntity {
     return OrderPointsModel(
       id: json['id'],
       total: json['total'],
-      totalPoints: json['total_points'],
+      totalPoints: json['totalPoints'],
       status: json['status'],
       observations: json['observations'],
       createdAt: DateTime.parse(json['createdAt']),

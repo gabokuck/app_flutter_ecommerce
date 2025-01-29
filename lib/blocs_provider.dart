@@ -3,6 +3,7 @@ import 'package:app_ventas/features/auth/presentation/blocs/blocs.dart';
 import 'package:app_ventas/features/bottomNavigation/presentation/blocs/bottomNavigationBarCubit/bottom_navigation_bar_cubit.dart';
 import 'package:app_ventas/features/categories/presentation/blocs/categories/categories_bloc.dart';
 import 'package:app_ventas/features/orders/presentation/blocs/blocs.dart';
+import 'package:app_ventas/features/points/presentation/blocs/blocs.dart';
 import 'package:app_ventas/features/products/presentation/blocs/products/products_bloc.dart';
 import 'package:app_ventas/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,10 @@ class BlocsProvider extends StatelessWidget {
       ),
       BlocProvider(
         create: (_) => getIt<OrdersBloc>(),
+        lazy: true,
+      ),
+      BlocProvider(
+        create: (_) => getIt<PointsBloc>(),
         lazy: true,
       ),
     ], child: child);

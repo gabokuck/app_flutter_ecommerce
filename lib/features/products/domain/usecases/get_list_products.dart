@@ -1,5 +1,4 @@
-import 'package:app_ventas/features/products/domain/entities/entities.dart';
-import 'package:app_ventas/features/products/domain/repositories/product_repository.dart';
+import 'package:app_ventas/features/products/domain/domain.dart';
 
 class GetListProducts {
   final ProductRepository repository;

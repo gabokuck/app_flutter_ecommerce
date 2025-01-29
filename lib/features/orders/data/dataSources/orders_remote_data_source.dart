@@ -18,7 +18,7 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
           .map((product) => OrderModel.fromJson(product))
           .toList();
     } else {
-      throw Exception('Failed to load Categories list');
+      throw Exception('Failed to load Points list');
     }
   }
 }

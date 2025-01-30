@@ -2,6 +2,7 @@ import 'package:app_ventas/core/core.dart';
 import 'package:app_ventas/features/auth/data/models/models.dart';
 import 'package:app_ventas/features/auth/domain/entities/entities.dart';
 import 'package:app_ventas/features/bottomNavigation/presentation/blocs/blocs.dart';
+import 'package:app_ventas/features/notifications/notifications.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GetLocalBearerToken getLocalBearerToken;
   final GetUserData getUserData;
   final UpdateBearerTokenServiceLocator updateBearerTokenServiceLocator;
+  final NotificationsBloc notificationsBloc;
 
   AuthBloc(
       {required this.loginUseCase,
@@ -24,7 +26,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       required this.getUserData,
       required this.updateBearerTokenServiceLocator,
       required this.logoutUseCase,
-      required this.bottomNavigationBarCubit})
+      required this.bottomNavigationBarCubit,
+      required this.notificationsBloc})
       : super(AuthState()) {
     on<LoginEvent>(_loginEvent);
     on<SetAuthStatusEvent>(_setAuthStatus);

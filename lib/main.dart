@@ -13,8 +13,8 @@ late SharedPreferences sharedPref;
 void main() async {
   await Environment.initEnvironment();
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await NotificationsBloc.initializeFCM();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   // Inicializa la configuración de localización
   await initializeDateFormatting('es_ES', null);

@@ -10,12 +10,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'notifications_event.dart';
 part 'notifications_state.dart';
 
+@pragma('vm:entry-point')
+// Función global para manejar notificaciones en segundo plano
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
-
-  print("Handling a background message: ${message.messageId}");
+  print("Mensaje en segundo plano: ${message.notification?.title}");
 }
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
@@ -24,6 +23,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   NotificationsBloc() : super(const NotificationsState()) {
     on<NotificationStatusChanged>(_notificationStatusChanged);
     on<NotificationReceived>(_onPushMessageReceived);
+    on<SetFirebaseMessagingTokenEvent>(_setFirebaseMessagingToken);
 
     // Verificar estado de las notificaciones
     _initialStatusCheck();
@@ -44,6 +44,11 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     _getFCMToken();
   }
 
+  void _setFirebaseMessagingToken(
+      SetFirebaseMessagingTokenEvent event, Emitter<NotificationsState> emit) {
+    emit(state.copyWith(pmfToken: event.token));
+  }
+
   void _onPushMessageReceived(
       NotificationReceived event, Emitter<NotificationsState> emit) {
     emit(state
@@ -60,6 +65,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
 
     final token = await messaging.getToken();
     print(token);
+    add(SetFirebaseMessagingTokenEvent(token));
   }
 
   void handleRemoteMessage(RemoteMessage message) {

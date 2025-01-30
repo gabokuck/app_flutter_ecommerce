@@ -13,3 +13,8 @@ class NotificationReceived extends NotificationsEvent {
   final PushMessageModel pushMessage;
   NotificationReceived(this.pushMessage);
 }
+
+class SetFirebaseMessagingTokenEvent extends NotificationsEvent {
+  final String? token;
+  SetFirebaseMessagingTokenEvent(this.token);
+}

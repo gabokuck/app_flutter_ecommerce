@@ -86,6 +86,7 @@ Future<void> serviceLocatorInit() async {
         updateBearerTokenServiceLocator:
             getIt<UpdateBearerTokenServiceLocator>(),
         bottomNavigationBarCubit: getIt<BottomNavigationBarCubit>(),
+        notificationsBloc: getIt<NotificationsBloc>(),
       ));
 
   // Set AuthBloc in BottomNavigationBarCubit

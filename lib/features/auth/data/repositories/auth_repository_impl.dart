@@ -33,4 +33,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> logout() {
     return localDataSource.logout();
   }
+
+  @override
+  Future<void> updateUserFirebasePushMessaging(String userId, String token) {
+    return remoteDataSource.updateUserFirebasePushMessaging(userId, token);
+  }
 }

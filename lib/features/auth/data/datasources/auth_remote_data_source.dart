@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> login(String email, String password);
   Future<CheckAuthStatusResponseModel?> checkAuthStatus();
+  Future<void> updateUserFirebasePushMessaging(String userId, String token);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -38,6 +39,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } catch (e) {
       handleNetworkError(e);
       return null;
+    }
+  }
+
+  @override
+  Future<void> updateUserFirebasePushMessaging(
+      String userId, String token) async {
+    try {
+      await apiClient.patch(
+        '${Environment.envData.baseUrl}/users/$userId',
+        data: {
+          'notification_token': token,
+        },
+      );
+    } catch (e) {
+      handleNetworkError(e);
     }
   }
 }

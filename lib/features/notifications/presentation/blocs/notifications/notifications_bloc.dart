@@ -86,6 +86,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
 
   void _onForegroundMessage() {
+    // Suscribir a topic
+    FirebaseMessaging.instance.subscribeToTopic('general');
     FirebaseMessaging.onMessage.listen(handleRemoteMessage);
   }
 

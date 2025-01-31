@@ -19,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GetUserData getUserData;
   final UpdateBearerTokenServiceLocator updateBearerTokenServiceLocator;
   final NotificationsBloc notificationsBloc;
+  final UpdateUserFirebasePushMessaging updateUserFirebasePushMessaging;
 
   AuthBloc(
       {required this.loginUseCase,
@@ -27,7 +28,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       required this.updateBearerTokenServiceLocator,
       required this.logoutUseCase,
       required this.bottomNavigationBarCubit,
-      required this.notificationsBloc})
+      required this.notificationsBloc,
+      required this.updateUserFirebasePushMessaging})
       : super(AuthState()) {
     on<LoginEvent>(_loginEvent);
     on<SetAuthStatusEvent>(_setAuthStatus);
@@ -64,6 +66,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         add(SetAuthStatusEvent(state.copyWith(
             status: AuthStatus.authenticated,
             user: userData.user as UserModel)));
+
+        // Actualizar el token de notificaciones
+        await checkAndUpDateUserFirebasePushMessaging(userData.user.id);
       } else {
         add(SetAuthStatusEvent(
             state.copyWith(status: AuthStatus.unauthenticated)));
@@ -71,6 +76,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       add(SetAuthStatusEvent(
           state.copyWith(status: AuthStatus.unauthenticated)));
+    }
+  }
+
+  Future<void> checkAndUpDateUserFirebasePushMessaging(String userId) async {
+    final notificationToken = notificationsBloc.state.pmfToken;
+    if (notificationToken != null && notificationToken.isNotEmpty) {
+      await updateUserFirebasePushMessaging(userId, notificationToken);
     }
   }
 

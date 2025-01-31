@@ -60,6 +60,7 @@ Future<void> serviceLocatorInit() async {
   getIt.registerLazySingleton(() => GetLocalBearerToken(getIt()));
   getIt.registerLazySingleton(() => GetUserData(getIt()));
   getIt.registerLazySingleton(() => UpdateBearerTokenServiceLocator());
+  getIt.registerLazySingleton(() => UpdateUserFirebasePushMessaging(getIt()));
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
@@ -87,6 +88,8 @@ Future<void> serviceLocatorInit() async {
             getIt<UpdateBearerTokenServiceLocator>(),
         bottomNavigationBarCubit: getIt<BottomNavigationBarCubit>(),
         notificationsBloc: getIt<NotificationsBloc>(),
+        updateUserFirebasePushMessaging:
+            getIt<UpdateUserFirebasePushMessaging>(),
       ));
 
   // Set AuthBloc in BottomNavigationBarCubit

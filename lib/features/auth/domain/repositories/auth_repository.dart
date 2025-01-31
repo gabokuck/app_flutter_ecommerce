@@ -5,4 +5,5 @@ abstract class AuthRepository {
   Future<String?> getLocalBearerToken();
   Future<CheckAuthStatusResponseEntity?> checkAuthStatus();
   Future<bool> logout();
+  Future<void> updateUserFirebasePushMessaging(String userId, String token);
 }

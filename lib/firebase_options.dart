@@ -59,11 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCoKD9tJCPqrAxU-ln_PNEbivgM3h1N5_k',
-    appId: '1:532216585435:ios:3ee3cfc3d549455bd6c0fe',
+    appId: '1:532216585435:ios:036aed86cd8f8459d6c0fe',
     messagingSenderId: '532216585435',
     projectId: 'app-venta-d8e99',
     storageBucket: 'app-venta-d8e99.firebasestorage.app',
-    iosBundleId: 'com.example.appVentas',
+    iosBundleId: 'com.app.venta-comida',
   );
 
 }

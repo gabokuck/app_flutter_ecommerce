@@ -57,14 +57,22 @@ class ProductDetailPage extends StatelessWidget {
                     child: Text('+'),
                   ),
                   Expanded(
-                      child: Container(
-                          height: 40,
+                      child: SizedBox(
+                          height: 50,
                           // color: Colors.orange,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Agregar'),
+                              Text('Agregar',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400)),
+                              Text(
+                                '\$${product.price}',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ))),
                 ],

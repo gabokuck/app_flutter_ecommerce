@@ -9,6 +9,13 @@ sealed class ProductsEvent extends Equatable {
 
 class LoadProductsEvent extends ProductsEvent {}
 
+class LoadProductByIdEvent extends ProductsEvent {
+  final String id;
+  const LoadProductByIdEvent(this.id);
+  @override
+  List<Object?> get props => [id];
+}
+
 class AddProductEvent extends ProductsEvent {
   final AddProductModel product;
   const AddProductEvent(this.product);

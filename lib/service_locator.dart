@@ -99,6 +99,7 @@ Future<void> serviceLocatorInit() async {
   // blocs
   getIt.registerFactory(() => ProductsBloc(
         getListProducts: getIt<GetListProducts>(),
+        getProductById: getIt<GetProductById>(),
         searchByCategory: getIt<SearchByCategory>(),
         addProduct: getIt<AddProduct>(),
         routerCubit: getIt<RouterCubit>(),
@@ -108,6 +109,8 @@ Future<void> serviceLocatorInit() async {
   // useCases
   getIt.registerLazySingleton<GetListProducts>(
       () => GetListProducts(getIt<ProductRepository>()));
+  getIt.registerLazySingleton<GetProductById>(
+      () => GetProductById(getIt<ProductRepository>()));
   getIt.registerLazySingleton<AddProduct>(
       () => AddProduct(getIt<ProductRepository>()));
   getIt.registerLazySingleton<SearchByCategory>(

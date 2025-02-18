@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
+  Future<ProductModel> getProductById(String id);
   Future<void> addProduct(AddProductModel product);
   Future<void> updateProduct(ProductModel product);
   Future<void> deleteProduct(String id);
@@ -23,6 +24,16 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       return (response.data as List)
           .map((product) => ProductModel.fromJson(product))
           .toList();
+    } else {
+      throw Exception('Failed to load Categories list');
+    }
+  }
+
+  @override
+  Future<ProductModel> getProductById(String id) async {
+    final response = await client.get('/products/$id');
+    if (response.statusCode == 200) {
+      return ProductModel.fromJson(response.data);
     } else {
       throw Exception('Failed to load Categories list');
     }

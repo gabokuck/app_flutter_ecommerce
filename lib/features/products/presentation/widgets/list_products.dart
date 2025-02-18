@@ -12,15 +12,15 @@ class ListProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsBloc, ProductsState>(
       builder: (context, state) {
-        if (state.status == ProductStatus.loading) {
+        if (state.status == ListProductStatus.loading) {
           return Center(
             child: CircularProgressIndicator(),
           );
-        } else if (state.status == ProductStatus.error) {
+        } else if (state.status == ListProductStatus.error) {
           return Center(
             child: Text(state.errorMessage ?? 'An error occurred'),
           );
-        } else if (state.status == ProductStatus.success) {
+        } else if (state.status == ListProductStatus.success) {
           if (state.products!.isEmpty) {
             return ProductNotDisponible();
           }

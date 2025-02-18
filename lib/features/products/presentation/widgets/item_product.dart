@@ -1,5 +1,5 @@
 import 'package:app_ventas/features/products/domain/entities/entities.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,38 +17,25 @@ class ItemProduct extends StatelessWidget {
         context.push('/product-detail/${product.id}');
 
         // TODO: Ejempplo de como implementar analytics
-        await FirebaseAnalytics.instance.logSelectItem(
-          itemListName: product.title,
-          itemListId: product.id,
-          parameters: {
-            'price': '${product.price}',
-            'sku': '${product.sku}',
-            'categories': '${product.categories}',
-          },
-        );
+        // await FirebaseAnalytics.instance.logSelectItem(
+        //   itemListName: product.title,
+        //   itemListId: product.id,
+        //   parameters: {
+        //     'price': '${product.price}',
+        //     'sku': '${product.sku}',
+        //     'categories': '${product.categories}',
+        //   },
+        // );
 
         // ** Por el momento se comenta para poseteriormente implementarlo
         // showModalBottomSheet<void>(
         //   context: context,
         //   builder: (BuildContext context) {
-        //     return SizedBox(
-        //       height: 200,
-        //       child: Center(
-        //         child: Column(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           mainAxisSize: MainAxisSize.min,
-        //           children: <Widget>[
-        //             const Text('Modal BottomSheet'),
-        //             ElevatedButton(
-        //               child: const Text('Close BottomSheet'),
-        //               onPressed: () => Navigator.pop(context),
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     );
+        //     return CustomBottomSheet(product: product);
         //   },
         // );
+
+        // productsBloc.add(LoadProductByIdEvent(product.id!));
       },
       child: Card(
         borderOnForeground: true,

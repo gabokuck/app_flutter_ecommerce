@@ -17,6 +17,11 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
+  Future<ProductEntity> getProductById(String id) async {
+    return await remoteDataSource.getProductById(id);
+  }
+
+  @override
   Future<void> addProduct(AddProductModel product) async {
     return await remoteDataSource.addProduct(product);
   }

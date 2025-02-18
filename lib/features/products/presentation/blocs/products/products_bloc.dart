@@ -10,6 +10,7 @@ part 'products_state.dart';
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final RouterCubit routerCubit;
   final GetListProducts getListProducts;
+  final GetProductById getProductById;
   final AddProduct addProduct;
   final SearchByCategory searchByCategory;
   final SearchByQuery searchByQuery;
@@ -18,6 +19,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     required this.searchByCategory,
     required this.addProduct,
     required this.getListProducts,
+    required this.getProductById,
     required this.routerCubit,
     required this.searchByQuery,
   }) : super(ProductsState()) {
@@ -27,17 +29,34 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<DeleteProductEvent>(_deleteProductEvent);
     on<SearchByCategoryEvent>(_searchByCategoryEvent);
     on<SearchByQueryEvent>(_searchByQueryEvent);
+    on<LoadProductByIdEvent>(_loadProductByIdEvent);
   }
 
   Future<void> _loadListProductsEvent(
       LoadProductsEvent event, Emitter<ProductsState> emit) async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(state.copyWith(status: ListProductStatus.loading));
     try {
       final products = await getListProducts();
-      emit(state.copyWith(status: ProductStatus.success, products: products));
+      emit(state.copyWith(
+          status: ListProductStatus.success, products: products));
     } catch (e) {
       emit(state.copyWith(
-        status: ProductStatus.error,
+        status: ListProductStatus.error,
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> _loadProductByIdEvent(
+      LoadProductByIdEvent event, Emitter<ProductsState> emit) async {
+    emit(state.copyWith(productStatus: ProductStatus.loading));
+    try {
+      final product = await getProductById(event.id);
+      emit(state.copyWith(
+          productStatus: ProductStatus.success, product: product));
+    } catch (e) {
+      emit(state.copyWith(
+        productStatus: ProductStatus.error,
         errorMessage: e.toString(),
       ));
     }
@@ -45,13 +64,14 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
   Future<void> _searchByCategoryEvent(
       SearchByCategoryEvent event, Emitter<ProductsState> emit) async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(state.copyWith(status: ListProductStatus.loading));
     try {
       final products = await searchByCategory(event.category);
-      emit(state.copyWith(status: ProductStatus.success, products: products));
+      emit(state.copyWith(
+          status: ListProductStatus.success, products: products));
     } catch (e) {
       emit(state.copyWith(
-        status: ProductStatus.error,
+        status: ListProductStatus.error,
         errorMessage: e.toString(),
       ));
     }
@@ -59,13 +79,14 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
   Future<void> _searchByQueryEvent(
       SearchByQueryEvent event, Emitter<ProductsState> emit) async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(state.copyWith(status: ListProductStatus.loading));
     try {
       final products = await searchByQuery(event.query);
-      emit(state.copyWith(status: ProductStatus.success, products: products));
+      emit(state.copyWith(
+          status: ListProductStatus.success, products: products));
     } catch (e) {
       emit(state.copyWith(
-        status: ProductStatus.error,
+        status: ListProductStatus.error,
         errorMessage: e.toString(),
       ));
     }
@@ -73,7 +94,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
   Future<void> _addProductEvent(
       AddProductEvent event, Emitter<ProductsState> emit) async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(state.copyWith(status: ListProductStatus.loading));
     try {
       await addProduct(event.product);
       routerCubit.goToRouter(1);
@@ -81,14 +102,14 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     } catch (e) {
       if (e is AppNetworkException) {
         emit(state.copyWith(
-            status: ProductStatus.error, errorMessage: e.message));
+            status: ListProductStatus.error, errorMessage: e.message));
       }
     }
   }
 
   Future<void> _updateProductEvent(
       UpdateProductEvent event, Emitter<ProductsState> emit) async {
-    emit(state.copyWith(status: ProductStatus.loading));
+    emit(state.copyWith(status: ListProductStatus.loading));
     try {
       await addProduct(event.product);
       routerCubit.goToRouter(1);
@@ -96,7 +117,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     } catch (e) {
       if (e is AppNetworkException) {
         emit(state.copyWith(
-            status: ProductStatus.error, errorMessage: e.message));
+            status: ListProductStatus.error, errorMessage: e.message));
       }
     }
   }
@@ -104,13 +125,13 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   Future<void> _deleteProductEvent(
       DeleteProductEvent event, Emitter<ProductsState> emit) async {
     try {
-      emit(state.copyWith(status: ProductStatus.loading));
+      emit(state.copyWith(status: ListProductStatus.loading));
       // await _productsRepository.deleteProduct(event.product);
-      emit(state.copyWith(status: ProductStatus.success));
+      emit(state.copyWith(status: ListProductStatus.success));
       await reloadProducts();
     } catch (e) {
       emit(state.copyWith(
-        status: ProductStatus.error,
+        status: ListProductStatus.error,
         errorMessage: e.toString(),
       ));
     }

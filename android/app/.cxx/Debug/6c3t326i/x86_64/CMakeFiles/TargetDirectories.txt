@@ -1,0 +1,2 @@
+/Users/gabrielrosacorona/desarrollo/proyectos_flutter/app_flutter_ecommerce/android/app/.cxx/Debug/6c3t326i/x86_64/CMakeFiles/edit_cache.dir
+/Users/gabrielrosacorona/desarrollo/proyectos_flutter/app_flutter_ecommerce/android/app/.cxx/Debug/6c3t326i/x86_64/CMakeFiles/rebuild_cache.dir

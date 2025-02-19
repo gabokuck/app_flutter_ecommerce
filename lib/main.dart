@@ -14,6 +14,7 @@ void main() async {
   await Environment.initEnvironment();
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationsBloc.initializeFCM();
+  await InitializeLocalNotifications.init();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   // Inicializa la configuración de localización

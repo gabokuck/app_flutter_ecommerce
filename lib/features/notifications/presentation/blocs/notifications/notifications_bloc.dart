@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app_ventas/features/notifications/data/models/models.dart';
+import 'package:app_ventas/features/notifications/notifications.dart';
 import 'package:app_ventas/firebase_options.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,9 +18,12 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
+  final RequestLocalNotificationsPermission requestPermissionLocalNotifications;
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  NotificationsBloc() : super(const NotificationsState()) {
+  NotificationsBloc(this.requestPermissionLocalNotifications)
+      : super(const NotificationsState()) {
     on<NotificationStatusChanged>(_notificationStatusChanged);
     on<NotificationReceived>(_onPushMessageReceived);
     on<SetFirebaseMessagingTokenEvent>(_setFirebaseMessagingToken);
@@ -82,6 +85,12 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
             ? message.notification!.android?.imageUrl
             : message.notification!.apple?.imageUrl);
 
+    InitializeLocalNotifications.showLocalNotification(
+        id: 1,
+        title: notification.title,
+        body: notification.body,
+        data: notification.data.toString());
+
     add(NotificationReceived(notification));
   }
 
@@ -101,6 +110,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       provisional: false,
       sound: true,
     );
+
+    await requestPermissionLocalNotifications;
 
     add(NotificationStatusChanged(settings.authorizationStatus));
   }

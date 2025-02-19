@@ -42,8 +42,11 @@ Future<void> serviceLocatorInit() async {
   getIt.registerSingleton<RouterCubit>(RouterCubit());
 
   // ** Notifications **
+  // usecases
+  getIt.registerLazySingleton(() => RequestLocalNotificationsPermission());
   // blocs
-  getIt.registerFactory(() => NotificationsBloc());
+  getIt.registerFactory(
+      () => NotificationsBloc(getIt<RequestLocalNotificationsPermission>()));
 
   // ** Bottom navigation **
   getIt.registerLazySingleton(() => PageIndexRepositoryImpl());
